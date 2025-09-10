@@ -8,16 +8,30 @@
     "start": "next start"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@hookform/resolvers": "^5.2.1",
+    "@tiptap/pm": "^3.4.2",
+    "@tiptap/react": "^3.4.2",
+    "@tiptap/starter-kit": "^3.4.2",
+    "date-fns": "^4.1.0",
+    "gsap": "^3.13.0",
+    "lenis": "^1.3.11",
+    "next": "15.5.2",
+    "next-auth": "5.0.0-beta.29",
+    "next-safe-action": "^8.0.11",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.5.2"
+    "react-hook-form": "^7.62.0",
+    "sonner": "^2.0.7",
+    "zod": "^4.1.5",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4"
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
