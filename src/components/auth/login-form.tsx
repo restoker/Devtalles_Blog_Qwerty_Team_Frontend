@@ -9,7 +9,7 @@ interface LoginFormProps {
 export function LoginForm({ onToggle }: LoginFormProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-0 min-h-[600px] rounded-2xl overflow-hidden">
-       <div className="bg-[#1a1a1a] p-8 md:p-10 flex flex-col justify-center">
+      <div className="bg-[#1a1a1a] p-8 md:p-10 flex flex-col justify-center">
         <div className="w-full max-w-md mx-auto">
           <h1 className="text-3xl font-bold tracking-tight text-white mb-2">
             Inicia sesión
@@ -25,15 +25,15 @@ export function LoginForm({ onToggle }: LoginFormProps) {
             </div>
 
             <div className="relative space-y-2">
-               <Icons.lock className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <Icons.lock className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
               <Input id="password" type="password" placeholder="Contraseña" required className="pl-10" />
             </div>
-            
+
             <StarBorder type="submit" className="w-full font-bold text-base" position="left">
               Iniciar sesión
             </StarBorder>
           </form>
-          
+
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t border-zinc-700" />
@@ -47,28 +47,29 @@ export function LoginForm({ onToggle }: LoginFormProps) {
 
           <div className="grid grid-cols-3 gap-3">
             <StarBorder position="left">
-                <Icons.google className="h-5 w-5 mx-auto" />
+              <Icons.google className="h-5 w-5 mx-auto" />
             </StarBorder>
             <StarBorder position="left">
-                <Icons.discord className="h-5 w-5 mx-auto" />
+              <Icons.discord className="h-5 w-5 mx-auto" />
             </StarBorder>
-             <StarBorder position="left">
-                <Icons.linkedin className="h-5 w-5 mx-auto" />
+            <StarBorder position="left">
+              <Icons.linkedin className="h-5 w-5 mx-auto" />
             </StarBorder>
           </div>
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
             ¿No tienes una cuenta?{' '}
-            <button type="button" onClick={onToggle} className="font-medium text-primary hover:underline bg-transparent border-none p-0">
-              Regístrate
+            <button type="button" onClick={onToggle} className="text-primary hover:underline bg-transparent border-none p-0 font-bold cursor-pointer">
+              Regístrate aquí
             </button>
           </p>
         </div>
       </div>
-      <div className="hidden md:flex flex-col justify-between p-10 text-white bg-cover bg-center relative" style={{backgroundImage: "url('/fotosingup.jpg')"}}>
+      <div className="hidden md:flex flex-col justify-between p-10 text-white bg-cover bg-center relative" style={{ backgroundImage: "url('/fotosingup.jpg')" }}>
         <div className="absolute inset-0 bg-black/30"></div>
         <div className="z-10">
-          <Icons.awLogo className="h-8 w-auto" />
+          {/* <Icons.awLogo className="h-8 w-auto" /> */}
+          <p className="text-2xl font-bold">{"{Dev/Blog}"}</p>
         </div>
         <div className="z-10 mt-auto">
           <h2 className="text-3xl font-bold">Bienvenido de nuevo</h2>

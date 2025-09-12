@@ -4,14 +4,16 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RegisterForm } from './register-form';
 import { LoginForm } from './login-form';
+// import { useRouter } from 'next/navigation';
 
 export function AuthForm() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const [direction, setDirection] = useState(1);
-
+  // const router = useRouter();
   const handleToggle = () => {
     setDirection(isLogin ? -1 : 1);
     setIsLogin(!isLogin);
+    // router.push(isLogin ? '/register' : '/login');
   };
 
   const variants = {
@@ -33,7 +35,7 @@ export function AuthForm() {
   };
 
   return (
-    <div className="relative w-full h-[600px] perspective-1000">
+    <div className="relative w-full h-[600px] perspective-1000 mt-16">
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={isLogin ? 'login' : 'register'}
