@@ -1,0 +1,28 @@
+{
+  "placeholderImages": [
+    {
+      "id": "profile-picture",
+      "description": "User profile picture placeholder",
+      "imageUrl": "https://picsum.photos/seed/1/128/128",
+      "imageHint": "profile picture"
+    },
+    {
+      "id": "testimonial-author",
+      "description": "Testimonial author placeholder image",
+      "imageUrl": "https://picsum.photos/seed/2/48/48",
+      "imageHint": "person portrait"
+    },
+    {
+      "id": "dev-blog-image",
+      "description": "Image for the Dev/Blog hero section",
+      "imageUrl": "https://picsum.photos/seed/devblog/600/400",
+      "imageHint": "abstract space nebula"
+    },
+    {
+      "id": "gen-ai-login-image",
+      "description": "Background image for the Gen AI login page",
+      "imageUrl": "https://picsum.photos/seed/genai/800/1200",
+      "imageHint": "desert landscape sunset"
+    }
+  ]
+}
