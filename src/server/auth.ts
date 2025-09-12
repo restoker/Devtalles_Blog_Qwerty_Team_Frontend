@@ -4,6 +4,10 @@ import GitHub from 'next-auth/providers/github';
 import Discord from 'next-auth/providers/discord';
 
 export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
+    secret: process.env.AUTH_SECRET,
+    session: {
+        strategy: 'jwt',
+    },
     providers: [
         Credentials({
             name: 'Credentials',

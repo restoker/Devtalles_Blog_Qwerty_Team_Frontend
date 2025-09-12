@@ -11,6 +11,8 @@ const Hero = () => {
     const imgRef = useRef<HTMLImageElement>(null);
     const heroImgHolderRef = useRef<HTMLDivElement>(null);
     const heroImgRef = useRef<HTMLDivElement>(null);
+    const svg1Ref = useRef<HTMLImageElement>(null);
+    const svg2Ref = useRef<HTMLImageElement>(null);
     let currentImageIndex = 1;
     const totalImages = 6;
     let scrollTriggerInstance: ScrollTrigger | null = null;
@@ -64,16 +66,37 @@ const Hero = () => {
 
     }, [])
 
+    useGSAP(() => {
+        const tl = gsap.timeline();
+        tl
+            .from(svg1Ref.current, {
+                opacity: 0,
+                scale: 0,
+                duration: 0.7,
+                ease: "elastic.out",
+                rotation: -15,
+            })
+            .from(svg2Ref.current, {
+                opacity: 0,
+                scale: 0,
+                duration: 0.7,
+                ease: "elastic.out",
+                rotation: 45,
+            }, '+0.2')
+    }, [])
+
 
     return (
         <>
             <section className="hero relative w-full h-dvh p-10 flex flex-col justify-center items-center overflow-x-hidden my-5">
                 <div className="hero-header-wrapper">
                     <div className="hero-header hero-header-1 relative translate-x-[-40%] z-[-1] mix-blend-color-dodge">
-                        <h1 className='text-[13vw] leading-[0.9] mix-blend-color-dodge'>Dev/</h1>
+                        <img ref={svg1Ref} src="/svg/25.svg" alt="" className='absolute -top-20 right-10' />
+                        <h1 className='text-[13vw] leading-[0.9] text-white'>Dev/</h1>
                     </div>
                     <div className="hero-header hero-header-2 relative translate-x-[40%] z-[2] mix-blend-difference">
                         <h1 className='text-[13vw] leading-[0.9]'>Blog</h1>
+                        <img ref={svg2Ref} src="/svg/5.svg" alt="" className='absolute bottom-0 -right-30 rotate-45' />
                     </div>
                 </div>
                 <div className="hero-footer absolute bottom-0 w-full p-10 flex justify-between">

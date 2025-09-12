@@ -4,14 +4,16 @@ import React, { useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 const navigation = [
-    { name: 'Blogs', href: '#' },
+    { name: 'Blogs', href: '/blog' },
     { name: "FAQs", href: '#' },
-    { name: 'About', href: '#' },
+    { name: 'About', href: '/about' },
     { name: 'Contact', href: '#' },
 ]
 const Navbar = () => {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const path = usePathname();
 
     return (
         <>
@@ -29,11 +31,11 @@ const Navbar = () => {
                                 <h1 className='font-bold text-2xl text-white'>{"{Dev/Blog}"}</h1>
                             </Link>
                         </div>
-                        <div className="hidden lg:flex lg:gap-x-12 ml-16">
+                        <div className="hidden lg:flex lg:gap-x-12 ml-16 lg:items-center">
                             {navigation.map((item) => (
-                                <a key={item.name} href={item.href} className="text-sm/6 font-semibold text-gray-300">
+                                <Link key={item.name} href={item.href} className="text-sm/6 font-semibold text-gray-400 hover:text-white">
                                     {item.name}
-                                </a>
+                                </Link>
                             ))}
                         </div>
                     </div>
@@ -47,23 +49,24 @@ const Navbar = () => {
                             <Bars3Icon aria-hidden="true" className="size-6" />
                         </button>
                     </div>
-                    <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+                    {path !== '/login' ? <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-5 lg:items-center">
                         <Link href="/login" className="text-sm/6 font-semibold text-white">
                             Log in <span aria-hidden="true">&rarr;</span>
                         </Link>
-                    </div>
+                    </div> : null}
                 </nav>
                 <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
                     <div className="fixed inset-0 z-50" />
-                    <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-100/10">
+                    <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900/5 backdrop-blur-lg p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-100/10">
                         <div className="flex items-center justify-between">
                             <a href="#" className="-m-1.5 p-1.5">
                                 <span className="sr-only">Your Company</span>
-                                <img
+                                {/* <img
                                     alt=""
                                     src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
                                     className="h-8 w-auto"
-                                />
+                                /> */}
+                                <h1 className='font-bold text-2xl text-white'>{"{Dev/Blog}"}</h1>
                             </a>
                             <button
                                 type="button"
@@ -81,19 +84,25 @@ const Navbar = () => {
                                         <a
                                             key={item.name}
                                             href={item.href}
-                                            className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5"
+                                            className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-400 hover:text-white hover:bg-white/5"
                                         >
                                             {item.name}
                                         </a>
                                     ))}
                                 </div>
                                 <div className="py-6">
-                                    <a
-                                        href="#"
+                                    <Link
+                                        href="/login"
                                         className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-white/5"
                                     >
                                         Log in
-                                    </a>
+                                    </Link>
+                                    <Link
+                                        href="/register"
+                                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-white/5"
+                                    >
+                                        Register
+                                    </Link>
                                 </div>
                             </div>
                         </div>
