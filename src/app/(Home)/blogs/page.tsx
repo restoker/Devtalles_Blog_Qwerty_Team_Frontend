@@ -47,7 +47,6 @@ const sortOptions = [
     { name: 'Price: Low to High', href: '#', current: false },
     { name: 'Price: High to Low', href: '#', current: false },
 ]
-
 const posts = [
     {
         id: 1,
@@ -103,6 +102,24 @@ const posts = [
             imageUrl:
                 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
         },
+    },
+    {
+        id: 4,
+        title: 'Boost your conversion rate',
+        href: '#',
+        description: 'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+        imageUrl:
+            '/img/img4.webp',
+        date: 'Mar 26, 2025',
+        datetime: '2020-03-16',
+        category: { title: 'Marketing', href: '#' },
+        author: {
+            name: 'Nombre del autor',
+            role: 'Designer',
+            href: '#',
+            imageUrl:
+                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        },
     }
 ]
 
@@ -112,13 +129,10 @@ export default function Blogs() {
     }
     return (
         <>
-            <div className="bg-zinc-950 py-24">
+            <div className="bg-zinc-950 py-10">
                 <div className="pb-24">
                     <div className="px-4 py-16 text-center sm:px-6 lg:px-8">
                         <h1 className="text-4xl font-bold tracking-tight text-zinc-50">Blogs</h1>
-                        <p className="mx-auto mt-4 max-w-xl text-base text-gray-300">
-                            All blogs from DevTalles
-                        </p>
                     </div>
                     {/* Filters */}
                     <Disclosure
