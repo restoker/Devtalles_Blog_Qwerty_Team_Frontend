@@ -6,6 +6,9 @@ import { registerSchema } from '@/types/register-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import z from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
+import { useAction } from 'next-safe-action/hooks';
+import { registerUserAction } from '@/server/actions/register-user-action';
+import clsx from 'clsx';
 
 interface RegisterFormProps {
   onToggle: () => void;
@@ -21,6 +24,15 @@ export function RegisterForm({ onToggle }: RegisterFormProps) {
       lastName: '',
       email: '',
       password: '',
+    }
+  })
+
+  const { execute, status } = useAction(registerUserAction, {
+    onSuccess: () => {
+      console.log('success');
+    },
+    onError: () => {
+      console.log('error');
     }
   })
 
@@ -128,8 +140,9 @@ export function RegisterForm({ onToggle }: RegisterFormProps) {
                     <FormItem>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <Input {...field}
-                          id="password"
+                        <Input
+                          {...field}
+                          // id="password"
                           placeholder="Your password"
                           required
                           type="password"
@@ -141,8 +154,18 @@ export function RegisterForm({ onToggle }: RegisterFormProps) {
                   )}
                 />
               </div>
-              <StarBorder type="submit" className="w-full font-bold text-base">
-                Crear cuenta
+              <StarBorder
+                type="submit"
+                className={clsx(
+                  'w-full font-bold text-base cursor-pointer',
+                  status === 'executing' && 'opacity-50 cursor-not-allowed',
+                  !form.formState.isValid && 'opacity-50 cursor-not-allowed'
+                )}
+                bgColor={status === 'executing' || !form.formState.isValid ? 'bg-[#2d2d2d]' : 'bg-purple-600'}
+                position="left"
+                disabled={status === 'executing' || !form.formState.isValid}
+              >
+                {status === 'executing' ? 'Registrando...' : 'Registrarse'}
               </StarBorder>
             </form>
           </Form>
