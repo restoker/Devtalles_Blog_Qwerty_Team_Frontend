@@ -1,12 +1,36 @@
 import { Input } from '@/components/ui/input';
 import { Icons } from '@/components/icons';
 import StarBorder from './star-border';
+import { useForm } from 'react-hook-form';
+import { registerSchema } from '@/types/register-schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import z from 'zod';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 
 interface RegisterFormProps {
   onToggle: () => void;
 }
 
 export function RegisterForm({ onToggle }: RegisterFormProps) {
+
+  const form = useForm<z.infer<typeof registerSchema>>({
+    mode: 'all',
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: '',
+      lastName: '',
+      email: '',
+      password: '',
+    }
+  })
+
+  function onSubmit(values: z.infer<typeof registerSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values);
+    // execute(values);
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-0 min-h-[600px] rounded-2xl overflow-hidden">
       <div className="hidden md:flex flex-col justify-between p-10 text-white bg-cover bg-center relative" style={{ backgroundImage: "url('/fotologin.jpg')" }}>
@@ -32,32 +56,95 @@ export function RegisterForm({ onToggle }: RegisterFormProps) {
             Crea tu cuenta para acceder a todas las funciones.
           </p>
 
-          <form action="/account" className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="relative space-y-2">
-                <Icons.user className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-                <Input id="first-name" placeholder="Nombre" required className="pl-10" />
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="relative space-y-2">
+                  <FormField
+                    control={form.control}
+                    name='name'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl>
+                          <Input {...field}
+                            id="first-name"
+                            placeholder="Your name"
+                            required
+                            className=""
+                          />
+                        </FormControl>
+                        <FormMessage className='text-red-500' />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="relative space-y-2">
+                  <FormField
+                    control={form.control}
+                    name='lastName'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Lastname</FormLabel>
+                        <FormControl>
+                          <Input {...field}
+                            id="last-name"
+                            placeholder="Your lastname"
+                            required
+                            className=""
+                          />
+                        </FormControl>
+                        <FormMessage className='text-red-500' />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
               <div className="relative space-y-2">
-                <Icons.user className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-                <Input id="last-name" placeholder="Apellido" required className="pl-10" />
+                <FormField
+                  control={form.control}
+                  name='email'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input {...field}
+                          id="email"
+                          placeholder="Your email"
+                          required
+                          className=""
+                        />
+                      </FormControl>
+                      <FormMessage className='text-red-500' />
+                    </FormItem>
+                  )}
+                />
               </div>
-            </div>
-
-            <div className="relative space-y-2">
-              <Icons.mail className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-              <Input id="email" type="email" placeholder="Correo electrónico" required className="pl-10" />
-            </div>
-
-            <div className="relative space-y-2">
-              <Icons.lock className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-              <Input id="password" type="password" placeholder="Contraseña" required className="pl-10" />
-            </div>
-
-            <StarBorder type="submit" className="w-full font-bold text-base">
-              Crear cuenta
-            </StarBorder>
-          </form>
+              <div className="relative space-y-2">
+                <FormField
+                  control={form.control}
+                  name='password'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input {...field}
+                          id="password"
+                          placeholder="Your password"
+                          required
+                          className=""
+                        />
+                      </FormControl>
+                      <FormMessage className='text-red-500' />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <StarBorder type="submit" className="w-full font-bold text-base">
+                Crear cuenta
+              </StarBorder>
+            </form>
+          </Form>
 
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">

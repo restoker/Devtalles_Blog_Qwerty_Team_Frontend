@@ -7,6 +7,7 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ onToggle }: LoginFormProps) {
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-0 min-h-[600px] rounded-2xl overflow-hidden">
       <div className="bg-[#1a1a1a] p-8 md:p-10 flex flex-col justify-center">
