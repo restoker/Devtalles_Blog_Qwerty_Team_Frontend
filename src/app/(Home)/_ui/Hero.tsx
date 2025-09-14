@@ -91,12 +91,12 @@ const Hero = () => {
             <section className="hero relative w-full h-dvh p-10 flex flex-col justify-center items-center overflow-x-hidden my-5">
                 <div className="hero-header-wrapper">
                     <div className="hero-header hero-header-1 relative translate-x-[-40%] z-[-1] mix-blend-color-dodge">
-                        <img ref={svg1Ref} src="/svg/25.svg" alt="" className='absolute -top-20 right-10' />
+                        <img ref={svg1Ref} src="/svg/25.svg" alt="" className='absolute -top-20 right-10 size-20 lg:size-36' />
                         <h1 className='text-[13vw] leading-[0.9] text-white'>Dev/</h1>
                     </div>
                     <div className="hero-header hero-header-2 relative translate-x-[40%] z-[2] mix-blend-difference">
                         <h1 className='text-[13vw] leading-[0.9]'>Blog</h1>
-                        <img ref={svg2Ref} src="/svg/5.svg" alt="" className='absolute bottom-0 -right-30 rotate-45' />
+                        <img ref={svg2Ref} src="/svg/5.svg" alt="" className='absolute bottom-0 -right-30 rotate-45 size-20 lg:size-36' />
                     </div>
                 </div>
                 <div className="hero-footer absolute bottom-0 w-full p-10 flex justify-between">
