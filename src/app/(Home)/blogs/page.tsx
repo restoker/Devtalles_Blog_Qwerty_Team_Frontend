@@ -8,7 +8,6 @@ import {
     MenuItems,
 } from '@headlessui/react'
 import { ChevronDownIcon, FunnelIcon, StarIcon } from '@heroicons/react/24/outline'
-import clsx from 'clsx'
 
 const filters = {
     price: [
@@ -47,49 +46,6 @@ const sortOptions = [
     { name: 'Newest', href: '#', current: false },
     { name: 'Price: Low to High', href: '#', current: false },
     { name: 'Price: High to Low', href: '#', current: false },
-]
-const products = [
-    {
-        id: 1,
-        name: 'Organize Basic Set (Walnut)',
-        price: '$149',
-        rating: 5,
-        reviewCount: 38,
-        imageSrc: 'https://tailwindui.com/plus-assets/img/ecommerce-images/category-page-05-image-card-01.jpg',
-        imageAlt: 'TODO',
-        href: '#',
-    },
-    {
-        id: 2,
-        name: 'Organize Pen Holder',
-        price: '$15',
-        rating: 5,
-        reviewCount: 18,
-        imageSrc: 'https://tailwindui.com/plus-assets/img/ecommerce-images/category-page-05-image-card-02.jpg',
-        imageAlt: 'TODO',
-        href: '#',
-    },
-    {
-        id: 3,
-        name: 'Organize Sticky Note Holder',
-        price: '$15',
-        rating: 5,
-        reviewCount: 14,
-        imageSrc: 'https://tailwindui.com/plus-assets/img/ecommerce-images/category-page-05-image-card-03.jpg',
-        imageAlt: 'TODO',
-        href: '#',
-    },
-    {
-        id: 4,
-        name: 'Organize Phone Holder',
-        price: '$15',
-        rating: 4,
-        reviewCount: 21,
-        imageSrc: 'https://tailwindui.com/plus-assets/img/ecommerce-images/category-page-05-image-card-04.jpg',
-        imageAlt: 'TODO',
-        href: '#',
-    },
-    // More products...
 ]
 
 const posts = [
@@ -161,7 +117,7 @@ export default function Blogs() {
                     <div className="px-4 py-16 text-center sm:px-6 lg:px-8">
                         <h1 className="text-4xl font-bold tracking-tight text-zinc-50">Blogs</h1>
                         <p className="mx-auto mt-4 max-w-xl text-base text-gray-300">
-                            The secret to a tidy desk? Don't get rid of anything, just put it in really really nice looking containers.
+                            All blogs from DevTalles
                         </p>
                     </div>
                     {/* Filters */}
