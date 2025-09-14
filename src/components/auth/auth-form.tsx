@@ -35,7 +35,7 @@ export function AuthForm() {
   };
 
   return (
-    <div className="relative w-full h-[600px] perspective-1000 mt-16">
+    <div className="relative w-full min-h-dvh perspective-1000 mt-16">
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={isLogin ? 'login' : 'register'}
