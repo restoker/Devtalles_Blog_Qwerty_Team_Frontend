@@ -29,10 +29,10 @@ export const Icons = {
     </div>
   ),
   awLogo: (props: LucideProps) => (
-    <svg 
+    <svg
       {...props}
-      fill="currentColor" 
-      viewBox="0 0 42 28" 
+      fill="currentColor"
+      viewBox="0 0 42 28"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path d="M21.2373 11.4533L16.208 0L12.7253 10.2667H0L10.3227 16.6L6.25333 28L16.208 21.0667L26.1627 28L22.0933 16.6L32.416 10.2667H19.6907L21.2373 11.4533Z" transform="translate(9.58398)"></path>

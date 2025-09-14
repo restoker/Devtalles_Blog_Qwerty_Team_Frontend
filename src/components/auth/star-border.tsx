@@ -8,12 +8,14 @@ type StarBorderProps<T extends React.ElementType> = React.ComponentPropsWithoutR
   children?: React.ReactNode;
   position?: 'left' | 'right';
   colorClassName?: string;
+  bgColor?: string | undefined;
 };
 
 const StarBorder = <T extends React.ElementType = 'button'>({
   as,
   className = '',
   children,
+  bgColor,
   position = 'right',
   colorClassName = 'bg-primary',
   ...rest
@@ -37,7 +39,8 @@ const StarBorder = <T extends React.ElementType = 'button'>({
         colorClassName
       )}></span>
       <span className={cn(
-        "relative z-10 flex items-center justify-center rounded-lg bg-[#2d2d2d] px-4 py-3 text-white transition-transform duration-200",
+        "relative z-10 flex items-center justify-center rounded-lg  px-4 py-3 text-white transition-transform duration-200",
+        bgColor ? bgColor : 'bg-[#2d2d2d]',
         hoverTranslateClass
       )}>
         {children}

@@ -1,12 +1,42 @@
 import { Input } from '@/components/ui/input';
 import { Icons } from '@/components/icons';
 import StarBorder from './star-border';
+import { loginSchema } from '@/types/login-schema';
+import z from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
+import { useAction } from "next-safe-action/hooks";
+import { loginWithEmailAndPasswordAction } from '@/server/actions/login-action';
+import clsx from 'clsx';
 
 interface LoginFormProps {
   onToggle: () => void;
 }
 
 export function LoginForm({ onToggle }: LoginFormProps) {
+
+  const form = useForm<z.infer<typeof loginSchema>>({
+    mode: 'all',
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    }
+  });
+
+  const { execute, status } = useAction(loginWithEmailAndPasswordAction, {
+    onSuccess: () => {
+      console.log('success');
+    },
+    onError: () => {
+      console.log('error');
+    }
+  })
+
+  function onSubmit(values: z.infer<typeof loginSchema>) {
+    console.log(values);
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-0 min-h-[600px] rounded-2xl overflow-hidden">
@@ -19,21 +49,66 @@ export function LoginForm({ onToggle }: LoginFormProps) {
             Bienvenido de nuevo.
           </p>
 
-          <form action="/account" className="space-y-4">
-            <div className="relative space-y-2">
-              <Icons.mail className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-              <Input id="email" type="email" placeholder="Correo electrónico" required className="pl-10" />
-            </div>
-
-            <div className="relative space-y-2">
-              <Icons.lock className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-              <Input id="password" type="password" placeholder="Contraseña" required className="pl-10" />
-            </div>
-
-            <StarBorder type="submit" className="w-full font-bold text-base" position="left">
-              Iniciar sesión
-            </StarBorder>
-          </form>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <div className="relative space-y-2">
+                <FormField
+                  control={form.control}
+                  name='email'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          id="email"
+                          placeholder="Your email"
+                          required
+                          className=""
+                        />
+                      </FormControl>
+                      <FormMessage className='text-red-500' />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="relative space-y-2">
+                <FormField
+                  control={form.control}
+                  name='password'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          // id="password"
+                          placeholder="Your password"
+                          required
+                          type="password"
+                          className=""
+                        />
+                      </FormControl>
+                      <FormMessage className='text-red-500' />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <StarBorder
+                type="submit"
+                className={clsx(
+                  'w-full font-bold text-base cursor-pointer focus:outline-none',
+                  status === 'executing' && 'opacity-50 cursor-not-allowed',
+                  !form.formState.isValid && 'opacity-50 cursor-not-allowed'
+                )}
+                bgColor={status === 'executing' || !form.formState.isValid ? 'bg-[#2d2d2d]' : 'bg-purple-600'}
+                position="left"
+                disabled={status === 'executing' || !form.formState.isValid}
+              >
+                {status === 'executing' ? 'Iniciando sesión...' : 'Iniciar sesión'}
+              </StarBorder>
+            </form>
+          </Form>
 
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
@@ -60,7 +135,11 @@ export function LoginForm({ onToggle }: LoginFormProps) {
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
             ¿No tienes una cuenta?{' '}
-            <button type="button" onClick={onToggle} className="text-primary hover:underline bg-transparent border-none p-0 font-bold cursor-pointer">
+            <button
+              type="button"
+              onClick={onToggle}
+              className="text-primary hover:underline bg-transparent border-none p-0 font-bold cursor-pointer"
+            >
               Regístrate aquí
             </button>
           </p>

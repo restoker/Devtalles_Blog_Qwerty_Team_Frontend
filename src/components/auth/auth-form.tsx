@@ -35,7 +35,7 @@ export function AuthForm() {
   };
 
   return (
-    <div className="relative w-full min-h-dvh perspective-1000 mt-16">
+    <div className="relative w-full min-h-[600px] h-dvh perspective-1000 mt-16 bg-black">
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={isLogin ? 'login' : 'register'}
@@ -45,7 +45,7 @@ export function AuthForm() {
           animate="center"
           exit="exit"
           transition={{ duration: 0.6 }}
-          className="absolute w-full h-full backface-hidden"
+          className="absolute w-full h-auto backface-hidden rounded-2xl overflow-hidden"
         >
           {isLogin ? (
             <LoginForm onToggle={handleToggle} />
