@@ -1,6 +1,5 @@
-'use client';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
-import React from 'react'
+import Link from 'next/link';
 
 const blogPosts = [
     {
@@ -62,11 +61,11 @@ const Blogs = () => {
                             <h2 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-3xl">Blogs:</h2>
                             <p className="mt-2 text-lg/8 text-gray-400">Here are some of our blogs.</p>
                         </div>
-                        <p className="text-white/50 flex items-center gap-1 group cursor-pointer">
+                        <Link href="/blogs" className="text-white/50 flex items-center gap-1 group cursor-pointer">
                             View all blogs
                             {/* right arrow */}
                             <ChevronRightIcon className="w-6 h-6 group-hover:translate-x-1 transition-all duration-300" />
-                        </p>
+                        </Link>
                     </div>
                 </div>
                 <div className="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
