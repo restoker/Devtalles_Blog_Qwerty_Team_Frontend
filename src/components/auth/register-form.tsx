@@ -132,6 +132,7 @@ export function RegisterForm({ onToggle }: RegisterFormProps) {
                           id="password"
                           placeholder="Your password"
                           required
+                          type="password"
                           className=""
                         />
                       </FormControl>
