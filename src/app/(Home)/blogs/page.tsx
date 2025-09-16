@@ -69,16 +69,16 @@ const posts = [
     },
     {
         id: 2,
-        title: 'Boost your conversion rate',
+        title: 'Docker: Contenedores para un Desarrollo Consistente',
         href: '/blogs/docker-blog',
-        description: 'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+        description: 'Descubre cómo Docker simplifica el desarrollo y despliegue de aplicaciones empaquetándolas en contenedores ligeros y portátiles.',
         imageUrl:
-            '/img/img2.webp',
+            'https://i.pinimg.com/1200x/3c/d2/6f/3cd26f91557248ed05f4626f8e7bdfde.jpg',
         date: 'Mar 26, 2025',
         datetime: '2020-03-16',
-        category: { title: 'Marketing', href: '#' },
+        category: { title: 'DevOps', href: '#' },
         author: {
-            name: 'Nombre del autor',
+            name: 'Juan Suasnavas',
             role: 'Devops Engineer',
             href: '#',
             imageUrl:
