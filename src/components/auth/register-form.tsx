@@ -159,7 +159,7 @@ export function RegisterForm({ onToggle }: RegisterFormProps) {
                 className={clsx(
                   'w-full font-bold text-base cursor-pointer',
                   status === 'executing' && 'opacity-50 cursor-not-allowed',
-                  !form.formState.isValid && 'opacity-50 cursor-not-allowed'
+                  !form.formState.isValid && 'opacity-50 cursor-not-allowed',
                 )}
                 bgColor={status === 'executing' || !form.formState.isValid ? 'bg-[#2d2d2d]' : 'bg-purple-600'}
                 position="left"
