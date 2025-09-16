@@ -50,17 +50,17 @@ const sortOptions = [
 const posts = [
     {
         id: 1,
-        title: 'Boost your conversion rate',
+        title: 'El Poder de los Componentes en React',
         href: '/blogs/componentes-react',
         description:
-            'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+            'Aprende a pensar en componentes reutilizables y a construir interfaces de usuario complejas de manera declarativa y eficiente con la librería más popular.',
         imageUrl:
-            '/img/img1.webp',
+            'https://i.pinimg.com/1200x/cb/a0/b8/cba0b89d2bf2d96a1ed26edb5849f804.jpg',
         date: 'Mar 26, 2025',
         datetime: '2020-03-16',
-        category: { title: 'Marketing', href: '#' },
+        category: { title: 'React', href: '#' },
         author: {
-            name: 'Nombre del autor',
+            name: 'Alex Rivera',
             role: 'Full Stack Developer',
             href: '#',
             imageUrl:
