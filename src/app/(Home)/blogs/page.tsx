@@ -7,7 +7,8 @@ import {
     MenuItem,
     MenuItems,
 } from '@headlessui/react'
-import { ChevronDownIcon, FunnelIcon, StarIcon } from '@heroicons/react/24/outline'
+import { ChevronDownIcon, FunnelIcon, PlusIcon, StarIcon } from '@heroicons/react/24/outline'
+import Link from 'next/link'
 
 const filters = {
     price: [
@@ -130,9 +131,15 @@ export default function Blogs() {
     return (
         <>
             <div className="bg-zinc-950 py-10">
-                <div className="pb-24">
-                    <div className="px-4 py-16 text-center sm:px-6 lg:px-8">
-                        <h1 className="text-4xl font-bold tracking-tight text-zinc-50">Blogs</h1>
+                <div className="pb-24 relative">
+                    <div className="px-4 py-16 sm:px-6 lg:px-8">
+                        <h1 className="text-5xl font-bold tracking-tight text-zinc-50">Blogs</h1>
+                    </div>
+                    <div className='absolute top-16 right-10 rounded-full flex items-center'>
+                        <Link href="/blogs/new" className="bg-purple-500/50 px-4 py-2 rounded-full flex gap-2 items-center hover:bg-purple-500/70 transition-colors cursor-pointer">
+                            <PlusIcon className="size-5" />
+                            <p className="text-sm/6 text-white hidden lg:block">new blog</p>
+                        </Link>
                     </div>
                     {/* Filters */}
                     <Disclosure
