@@ -397,50 +397,52 @@ export default function Blogs() {
                         </h2>
                         <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                             {posts.map((post) => (
-                                <article key={post.id} className="flex flex-col items-start justify-between bg-zinc-800 rounded-2xl">
-                                    <div className="relative w-full">
-                                        <img
-                                            alt=""
-                                            src={post.imageUrl}
-                                            className="aspect-video w-full rounded-t-2xl bg-gray-100 object-cover sm:aspect-2/1 lg:aspect-3/2"
-                                        />
-                                        <div className="absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset" />
-                                    </div>
-                                    <div className="max-w-xl px-2 pb-2">
-                                        <div className="mt-8 flex items-center gap-x-4 text-xs">
-                                            <time dateTime={post.datetime} className="text-gray-400">
-                                                {post.date}
-                                            </time>
-                                            <a
-                                                href={post.category.href}
-                                                className="relative z-10 rounded-full px-3 py-1.5 font-medium bg-gray-50/5 text-white hover:bg-gray-100/20"
-                                            >
-                                                {post.category.title}
-                                            </a>
+                                <Link href={`/blogs/${post.id}`} key={post.id}>
+                                    <article key={post.id} className="flex flex-col items-start justify-between bg-zinc-800 rounded-2xl group">
+                                        <div className="relative w-full overflow-hidden rounded-t-2xl">
+                                            <img
+                                                alt=""
+                                                src={post.imageUrl}
+                                                className="aspect-video w-full rounded-t-2xl bg-gray-100 object-cover sm:aspect-2/1 lg:aspect-3/2 group-hover:scale-105 transition-all duration-500 hover:blur-sm"
+                                            />
+                                            <div className="absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset" />
                                         </div>
-                                        <div className="group relative">
-                                            <h3 className="mt-3 text-lg/6 font-semibold text-white group-hover:text-gray-100">
-                                                <a href={post.href}>
-                                                    <span className="absolute inset-0" />
-                                                    {post.title}
+                                        <div className="w-full px-2 pb-2">
+                                            <div className="mt-8 flex items-center gap-x-4 text-xs">
+                                                <time dateTime={post.datetime} className="text-gray-400">
+                                                    {post.date}
+                                                </time>
+                                                <a
+                                                    href={post.category.href}
+                                                    className="relative z-10 rounded-full px-3 py-1.5 font-medium bg-gray-50/5 text-white hover:bg-gray-100/20"
+                                                >
+                                                    {post.category.title}
                                                 </a>
-                                            </h3>
-                                            <p className="mt-5 line-clamp-3 text-sm/6 text-gray-400">{post.description}</p>
-                                        </div>
-                                        <div className="relative mt-8 flex items-center gap-x-4">
-                                            <img alt="" src={post.author.imageUrl} className="size-10 rounded-full bg-gray-100" />
-                                            <div className="text-sm/6">
-                                                <p className="font-semibold text-gray-300">
-                                                    <a href={post.author.href}>
+                                            </div>
+                                            <div className="group relative flex justify-center w-full flex-col items-center">
+                                                <h3 className="mt-3 text-lg/6 font-semibold text-white group-hover:text-gray-100">
+                                                    <a href={post.href}>
                                                         <span className="absolute inset-0" />
-                                                        {post.author.name}
+                                                        {post.title}
                                                     </a>
-                                                </p>
-                                                <p className="text-gray-400">{post.author.role}</p>
+                                                </h3>
+                                                <p className="mt-5 line-clamp-2 text-sm/6 text-gray-400">{post.description}</p>
+                                            </div>
+                                            <div className="relative mt-8 flex items-center gap-x-4">
+                                                <img alt="" src={post.author.imageUrl} className="size-10 rounded-full bg-gray-100" />
+                                                <div className="text-sm/6">
+                                                    <p className="font-semibold text-gray-300">
+                                                        <a href={post.author.href}>
+                                                            <span className="absolute inset-0" />
+                                                            {post.author.name}
+                                                        </a>
+                                                    </p>
+                                                    <p className="text-gray-400">{post.author.role}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </article>
+                                    </article>
+                                </Link>
                             ))}
                         </div>
                     </section>
