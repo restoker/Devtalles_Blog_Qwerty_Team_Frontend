@@ -105,17 +105,17 @@ const posts = [
     },
     {
         id: 4,
-        title: 'Boost your conversion rate',
+        title: 'Bases de Datos SQL vs. NoSQL: ¿Cuál elegir?',
         href: '/blogs/sql-vs-nosql',
-        description: 'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+        description: 'Entiende las diferencias clave, ventajas y casos de uso de las bases de datos relacionales y no relacionales para tomar la mejor decisión para tu proyecto.',
         imageUrl:
-            '/img/img4.webp',
+            'https://i.pinimg.com/736x/bd/e1/a1/bde1a1f4653019057400a1c025873407.jpg',
         date: 'Mar 26, 2025',
         datetime: '2020-03-16',
-        category: { title: 'Marketing', href: '#' },
+        category: { title: 'Database', href: '#' },
         author: {
-            name: 'Nombre del autor',
-            role: 'Designer',
+            name: 'Carla Moreno',
+            role: 'Software Engineer',
             href: '#',
             imageUrl:
                 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
