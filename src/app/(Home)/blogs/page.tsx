@@ -87,17 +87,17 @@ const posts = [
     },
     {
         id: 3,
-        title: 'Boost your conversion rate',
+        title: 'JavaScript Moderno: Más Allá de ES6',
         href: '/blogs/javascript-moderno',
-        description: 'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+        description: 'Explora las características más recientes de JavaScript que están cambiando la forma en que escribimos código para la web, desde el encadenamiento opcional hasta BigInt.',
         imageUrl:
-            '/img/img3.webp',
+            'https://i.pinimg.com/1200x/b4/d5/e3/b4d5e3a47472d0a6b2606dd065cb0f93.jpg',
         date: 'Mar 26, 2025',
         datetime: '2020-03-16',
-        category: { title: 'Marketing', href: '#' },
+        category: { title: 'JavaScript', href: '#' },
         author: {
-            name: 'Nombre del autor',
-            role: 'Designer',
+            name: 'Milena Quitama',
+            role: 'Web Designer',
             href: '#',
             imageUrl:
                 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
