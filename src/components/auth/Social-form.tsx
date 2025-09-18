@@ -10,7 +10,18 @@ import { signIn } from 'next-auth/react';
 
 const SocialForm = () => {
 
-    // const { execute } = useAction(socialDiscordLoginAction);
+    // const { execute } = useAction(socialDiscordLoginAction, {
+    //     onSuccess: (data) => {
+    //         console.log(data);
+    //     },
+    //     onError: (error) => {
+    //         console.log(error);
+    //     }
+    // });
+
+    // const handleSocialLogin = (type: string) => {
+    //     execute({ type });
+    // };
 
     return (
         <div className="grid grid-cols-3 gap-3">
@@ -19,6 +30,7 @@ const SocialForm = () => {
             </StarBorder>
             <StarBorder
                 position="left"
+                // onClick={() => handleSocialLogin('discord')}
                 onClick={() => signIn('discord')}
             >
                 <Icons.discord className="h-5 w-5 mx-auto" />

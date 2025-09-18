@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import z from 'zod';
@@ -10,25 +10,42 @@ import { ChevronDownIcon, PhotoIcon } from '@heroicons/react/24/outline';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import TipTap from './TipTap';
+import { CategoriesBlog } from '@/interfaces';
+import { UploadButton } from '@/app/api/uploadthing/upload';
+import { useAction } from 'next-safe-action/hooks';
+import { createBlogAction } from '@/server/actions/create-blog-action';
 
-const FormNewBlog = () => {
+
+const FormNewBlog = ({ categories }: { categories: CategoriesBlog[] }) => {
     // const router = useRouter();
+    const [coverUploading, setCoverUploading] = useState(false);
     const params = useSearchParams();
     const editMode = params.get('id');
-
+    // console.log(categories);
     const form = useForm<z.infer<typeof newBlogSchema>>({
         resolver: zodResolver(newBlogSchema),
         defaultValues: {
             title: "",
+            resume: "",
             description: "",
             cover: "",
             tags: [],
-            categories: [],
+            categories: categories[0].id.toString(),
         },
         mode: "all",
+    });
+
+    const { execute, status } = useAction(createBlogAction, {
+        onSuccess: () => {
+            form.reset();
+        }
     })
 
-    function checkProduct() {
+    // const categoriesWatch = form.watch('categories');
+    // console.log(categoriesWatch);
+    console.log(form.formState.errors);
+    console.log(form.watch('cover'));
+    function checkBlog() {
         throw new Error('Function not implemented.');
     }
 
@@ -37,7 +54,7 @@ const FormNewBlog = () => {
         if (!editMode) return;
         if (editMode) {
             // TODO: get blog by id
-            checkProduct();
+            checkBlog();
         }
     }, [editMode]);
 
@@ -80,7 +97,7 @@ const FormNewBlog = () => {
                                 <div className="sm:col-span-4">
                                     <FormField
                                         control={form.control}
-                                        name="title"
+                                        name="resume"
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>Resume of publication</FormLabel>
@@ -116,11 +133,11 @@ const FormNewBlog = () => {
                                     />
                                     <p className="mt-3 text-sm/6 text-gray-400">Write the content of your blog, will be displayed on your blog. this is it that your readers will read.</p>
                                 </div>
-                                <div className="col-span-full">
-                                    <label htmlFor="cover-photo" className="block text-sm/6 font-medium text-white">
+                                <div className="col-span-full border border-white/25 rounded-2xl p-4 flex items-center flex-col">
+                                    <FormLabel className="block text-sm/6 font-medium text-white">
                                         Cover Photo of publication
-                                    </label>
-                                    <div className="mt-2 flex justify-center rounded-lg border border-dashed border-white/25 px-6 py-10">
+                                    </FormLabel>
+                                    {/* <div className="mt-2 flex justify-center rounded-lg border border-dashed border-white/25 px-6 py-10">
                                         <div className="text-center">
                                             <PhotoIcon aria-hidden="true" className="mx-auto size-12 text-gray-600" />
                                             <div className="mt-4 flex text-sm/6 text-gray-400">
@@ -136,7 +153,35 @@ const FormNewBlog = () => {
                                             <p className="text-xs/5 text-gray-400">PNG, JPG, GIF up to 10MB</p>
                                         </div>
                                     </div>
-                                    <p className="mt-3 text-sm/6 text-gray-400">This is the first image that will be displayed on your publication. Choose a photo that will engage your users</p>
+                                    <p className="mt-3 text-sm/6 text-gray-400">This is the first image that will be displayed on your publication. Choose a photo that will engage your users</p> */}
+                                    {!form.getValues('cover') ? <img src="/svg/23.svg" className='size-48' alt="" /> : <img src={form.getValues('cover')} className='size-48' alt='user_image' />}
+                                    <UploadButton
+                                        className="scale-75 ut-button:ring-primary  ut-label:bg-red-50  ut-button:bg-amber-500  hover:ut-button:bg-amber-600 ut:button:transition-all ut-button:duration-500  ut-label:hidden ut-allowed-content:hidden"
+                                        disabled={status === 'executing'}
+                                        onUploadBegin={() => {
+                                            setCoverUploading(true);
+                                        }}
+                                        onUploadError={(error) => {
+                                            form.setError('cover', {
+                                                type: 'validate',
+                                                message: error.message,
+                                            });
+                                            setCoverUploading(false);
+                                            return;
+                                        }}
+                                        onClientUploadComplete={(res) => {
+                                            form.setValue('cover', res[0].ufsUrl);
+                                            setCoverUploading(false);
+                                            return;
+                                        }}
+                                        endpoint="avatarUploader"
+                                        content={{
+                                            button({ ready }) {
+                                                if (ready) return <div>Press to upload cover</div>
+                                                return <div className="text-white tetx-2xl absolute z-50 bg-black/50 w-full h-full flex items-center justify-center">Uploading...</div>
+                                            },
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -146,7 +191,7 @@ const FormNewBlog = () => {
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                 <div className="sm:col-span-3">
                                     <label htmlFor="first-name" className="block text-sm/6 font-medium text-white">
-                                        First name
+                                        Tags
                                     </label>
                                     <div className="mt-2">
                                         <input
@@ -159,25 +204,46 @@ const FormNewBlog = () => {
                                     </div>
                                 </div>
                                 <div className="sm:col-span-3">
-                                    <label htmlFor="country" className="block text-sm/6 font-medium text-white">
+                                    {/* <label htmlFor="country" className="block text-sm/6 font-medium text-white">
                                         Category
-                                    </label>
-                                    <div className="mt-2 grid grid-cols-1">
-                                        <select
-                                            id="country"
-                                            name="country"
-                                            autoComplete="country-name"
-                                            className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white/5 py-1.5 pr-8 pl-3 text-base text-white outline-1 -outline-offset-1 outline-white/10 *:bg-gray-800 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
-                                        >
-                                            <option>United States</option>
-                                            <option>Canada</option>
-                                            <option>Mexico</option>
-                                        </select>
-                                        <ChevronDownIcon
-                                            aria-hidden="true"
-                                            className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-400 sm:size-4"
-                                        />
-                                    </div>
+                                    </label> */}
+                                    <FormField
+                                        control={form.control}
+                                        name="categories"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="block text-sm/6 font-medium text-white"> Content of blog</FormLabel>
+                                                <div className="mt-2 grid grid-cols-1">
+                                                    <select
+                                                        {...field}
+                                                        value={field.value}
+                                                        onBlur={field.onBlur}
+                                                        id="category"
+                                                        name="category"
+                                                        autoComplete="country-name"
+                                                        className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white/5 py-1.5 pr-8 pl-3 text-base text-white outline-1 -outline-offset-1 outline-white/10 *:bg-gray-800 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                                                        onChange={(selectedOption) => field.onChange(selectedOption ? selectedOption.target.value : null)}
+                                                    >
+                                                        {categories.map((category) => (
+                                                            <option
+                                                                key={category.id}
+                                                                value={category.id}
+                                                            >
+                                                                {category.name}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                    <ChevronDownIcon
+                                                        aria-hidden="true"
+                                                        className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-400 sm:size-4"
+                                                    />
+                                                </div>
+                                                <FormControl />
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
                                 </div>
                             </div>
                         </div>

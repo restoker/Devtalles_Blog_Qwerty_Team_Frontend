@@ -25,7 +25,7 @@ const solutions = [
 
 const PopperMenuUser = ({ session }: { session: Session }) => {
     const user = session?.user;
-    console.log(user);
+    // console.log(user);
     return (
         <>
             <Popover className="relative">
