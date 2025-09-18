@@ -9,6 +9,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { useAction } from 'next-safe-action/hooks';
 import { registerUserAction } from '@/server/actions/register-user-action';
 import clsx from 'clsx';
+import { toast } from 'sonner';
+import { CheckCircleIcon, FaceFrownIcon } from '@heroicons/react/24/outline';
 
 interface RegisterFormProps {
   onToggle: () => void;
@@ -21,26 +23,57 @@ export function RegisterForm({ onToggle }: RegisterFormProps) {
     resolver: zodResolver(registerSchema),
     defaultValues: {
       name: '',
-      lastName: '',
+      lastname: '',
       email: '',
       password: '',
     }
   })
 
   const { execute, status } = useAction(registerUserAction, {
-    onSuccess: () => {
-      console.log('success');
+    onSuccess: ({ data }) => {
+      // console.log(data);
+      if (data.ok) {
+        toast.success(data.msg || '', {
+          classNames: {
+            toast: 'text-white bg-lime-600',
+            closeButton: 'bg-lime-600 text-red-700'
+          },
+          closeButton: true,
+          position: 'top-right',
+          // duration: Infinity,
+          icon: <CheckCircleIcon className='animate-bounce' />,
+          duration: 2000,
+        });
+        window.location.replace('/login');
+      }
+
+      if (!data.ok) {
+        toast.error(data.msg || '', {
+          classNames: {
+            toast: 'text-white bg-red-500',
+            closeButton: 'bg-red-500 text-red-700'
+          },
+          closeButton: true,
+          position: 'top-right',
+          // duration: Infinity,
+          icon: <FaceFrownIcon className='animate-bounce' />,
+          duration: 2000,
+        });
+      }
     },
     onError: () => {
-      console.log('error');
+      toast('error', {
+        className: 'my-classname',
+        description: 'Error al registrar el usuario',
+        duration: 2000,
+        // icon: <MyIcon />,
+      });
     }
   })
 
   function onSubmit(values: z.infer<typeof registerSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-    // execute(values);
+    // console.log(values);
+    execute(values);
   }
 
   return (
@@ -94,7 +127,7 @@ export function RegisterForm({ onToggle }: RegisterFormProps) {
                 <div className="relative space-y-2">
                   <FormField
                     control={form.control}
-                    name='lastName'
+                    name='lastname'
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Lastname</FormLabel>

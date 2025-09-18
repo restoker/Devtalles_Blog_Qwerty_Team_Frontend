@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react'
 import React, { useRef } from 'react'
 import CardNews from './CardNews';
+import Link from 'next/link';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -75,12 +76,14 @@ const News = () => {
         <>
             <div className="mt-32 sm:mt-40 xl:mx-auto xl:max-w-7xl xl:px-8 relative">
                 <div className='flex justify-between items-center'>
-                    <h2 ref={triggerRef} className="text-4xl font-semibold tracking-tight text-pretty text-white sm:text-3xl">News: </h2>
-                    <p className='text-white/50 flex items-center gap-1 group cursor-pointer'>
-                        View all news
-                        {/* right arrow */}
-                        <ChevronRightIcon className="w-6 h-6 group-hover:translate-x-1 transition-all duration-300" />
-                    </p>
+                    <h2 ref={triggerRef} className="text-4xl font-semibold tracking-tight text-pretty text-white sm:text-3xl">Hot Blogs: </h2>
+                    <Link href="/blogs">
+                        <p className='text-white/50 flex items-center gap-1 group cursor-pointer'>
+                            View all blogs
+                            {/* right arrow */}
+                            <ChevronRightIcon className="w-6 h-6 group-hover:translate-x-1 transition-all duration-300" />
+                        </p>
+                    </Link>
                 </div>
                 <video
                     ref={videoRef}

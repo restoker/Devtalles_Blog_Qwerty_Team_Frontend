@@ -1,6 +1,12 @@
+import { redirect } from "next/navigation";
 import FormNewBlog from "./_ui/FormNewBlog";
+import { auth } from "@/server/auth";
 
-export default function NewBlog() {
+export default async function NewBlog() {
+    const session = await auth();
+    if (!session) {
+        return redirect('/login');
+    }
     return (
         <>
             <div className="mx-auto max-w-5xl pt-16 lg:flex lg:gap-x-16 lg:px-8">

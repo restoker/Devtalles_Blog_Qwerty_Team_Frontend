@@ -4,7 +4,8 @@ import { SessionProvider } from 'next-auth/react'
 // import type { LenisRef } from 'lenis/react';
 import type { Orientation } from "lenis";
 import { ReactLenis } from 'lenis/react'
-import gsap from 'gsap'
+// import gsap from 'gsap'
+import { Toaster } from 'sonner'
 
 export const RootProvider = ({ children }: { children: React.ReactNode }) => {
     const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -57,11 +58,12 @@ export const RootProvider = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <div className="bg-zinc-950">
-            {/* <SessionProvider> */}
-            <ReactLenis root options={scrollSettings}>
-                {children}
-            </ReactLenis>
-            {/* </SessionProvider> */}
+            <SessionProvider>
+                <Toaster />
+                <ReactLenis root options={scrollSettings}>
+                    {children}
+                </ReactLenis>
+            </SessionProvider>
         </div>
     )
 }

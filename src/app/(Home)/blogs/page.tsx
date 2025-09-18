@@ -1,3 +1,4 @@
+import { auth } from '@/server/auth'
 import {
     Disclosure,
     DisclosureButton,
@@ -124,10 +125,13 @@ const posts = [
     }
 ]
 
-export default function Blogs() {
-    function classNames(...classes: string[]) {
-        return classes.filter(Boolean).join(' ')
-    }
+function classNames(...classes: string[]) {
+    return classes.filter(Boolean).join(' ')
+}
+export default async function Blogs() {
+    const session = await auth();
+    // console.log(session);
+
     return (
         <>
             <div className="bg-zinc-950 py-10">
@@ -135,12 +139,18 @@ export default function Blogs() {
                     <div className="px-4 py-16 sm:px-6 lg:px-8">
                         <h1 className="text-5xl font-bold tracking-tight text-zinc-50">Blogs</h1>
                     </div>
-                    <div className='absolute top-16 right-10 rounded-full flex items-center'>
-                        <Link href="/blogs/new" className="bg-purple-500/50 px-4 py-2 rounded-full flex gap-2 items-center hover:bg-purple-500/70 transition-colors cursor-pointer">
-                            <PlusIcon className="size-5" />
-                            <p className="text-sm/6 text-white hidden lg:block">new blog</p>
-                        </Link>
-                    </div>
+                    {
+                        !session
+                            ?
+                            null
+                            :
+                            <div className='absolute top-16 right-10 rounded-full flex items-center'>
+                                <Link href="/blogs/new" className="bg-purple-500/50 px-4 py-2 rounded-full flex gap-2 items-center hover:bg-purple-500/70 transition-colors cursor-pointer">
+                                    <PlusIcon className="size-5" />
+                                    <p className="text-sm/6 text-white hidden lg:block">new blog</p>
+                                </Link>
+                            </div>
+                    }
                     {/* Filters */}
                     <Disclosure
                         as="section"
@@ -397,34 +407,34 @@ export default function Blogs() {
                         </h2>
                         <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                             {posts.map((post) => (
-                                <Link href={`/blogs/${post.id}`} key={post.id}>
+                                <div key={post.id}>
                                     <article key={post.id} className="flex flex-col items-start justify-between bg-zinc-800 rounded-2xl group">
-                                        <div className="relative w-full overflow-hidden rounded-t-2xl">
+                                        <Link href={`/blogs/${post.id}`} className="relative w-full overflow-hidden rounded-t-2xl">
                                             <img
                                                 alt=""
                                                 src={post.imageUrl}
                                                 className="aspect-video w-full rounded-t-2xl bg-gray-100 object-cover sm:aspect-2/1 lg:aspect-3/2 group-hover:scale-105 transition-all duration-500 hover:blur-sm"
                                             />
                                             <div className="absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset" />
-                                        </div>
+                                        </Link>
                                         <div className="w-full px-2 pb-2">
                                             <div className="mt-8 flex items-center gap-x-4 text-xs">
                                                 <time dateTime={post.datetime} className="text-gray-400">
                                                     {post.date}
                                                 </time>
-                                                <a
-                                                    href={post.category.href}
+                                                <Link
+                                                    href={`/blogs/${post.id}`}
                                                     className="relative z-10 rounded-full px-3 py-1.5 font-medium bg-gray-50/5 text-white hover:bg-gray-100/20"
                                                 >
                                                     {post.category.title}
-                                                </a>
+                                                </Link>
                                             </div>
                                             <div className="group relative flex justify-center w-full flex-col items-center">
                                                 <h3 className="mt-3 text-lg/6 font-semibold text-white group-hover:text-gray-100">
-                                                    <a href={post.href}>
+                                                    <Link href={`/blogs/${post.id}`}>
                                                         <span className="absolute inset-0" />
                                                         {post.title}
-                                                    </a>
+                                                    </Link>
                                                 </h3>
                                                 <p className="mt-5 line-clamp-2 text-sm/6 text-gray-400">{post.description}</p>
                                             </div>
@@ -432,17 +442,17 @@ export default function Blogs() {
                                                 <img alt="" src={post.author.imageUrl} className="size-10 rounded-full bg-gray-100" />
                                                 <div className="text-sm/6">
                                                     <p className="font-semibold text-gray-300">
-                                                        <a href={post.author.href}>
+                                                        <Link href={post.author.href}>
                                                             <span className="absolute inset-0" />
                                                             {post.author.name}
-                                                        </a>
+                                                        </Link>
                                                     </p>
                                                     <p className="text-gray-400">{post.author.role}</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </article>
-                                </Link>
+                                </div>
                             ))}
                         </div>
                     </section>

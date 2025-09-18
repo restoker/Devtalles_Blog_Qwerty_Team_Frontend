@@ -1,10 +1,14 @@
 'use client';
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import MobilNavegation from './MobilNavegation';
+import { Session } from 'next-auth';
+import PopperMenuUser from './PopperMenuUser';
 const navigation = [
     { name: 'Blogs', href: '/blogs' },
     { name: "FAQs", href: '#' },
@@ -14,6 +18,11 @@ const navigation = [
 const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const path = usePathname();
+    // const [session, setSession] = useState<Session | null>(null);
+    const { data: sesion } = useSession();
+    // useEffect(() => {
+    //     setSession(sesion);
+    // }, [sesion]);
 
     return (
         <>
@@ -49,11 +58,22 @@ const Navbar = () => {
                             <Bars3Icon aria-hidden="true" className="size-6" />
                         </button>
                     </div>
-                    {path !== '/login' ? <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-5 lg:items-center">
-                        <Link href="/login" className="text-sm/6 font-semibold text-white">
-                            Log in <span aria-hidden="true">&rarr;</span>
-                        </Link>
-                    </div> : null}
+                    {path !== '/login'
+                        ?
+                        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-5 lg:items-center">
+                            {
+                                sesion?.user
+                                    ?
+                                    <PopperMenuUser session={sesion} />
+                                    :
+                                    <Link href="/login" className="text-sm/6 font-semibold text-white">
+                                        Log in <span aria-hidden="true">&rarr;</span>
+                                    </Link>
+                            }
+                        </div>
+                        :
+                        null
+                    }
                 </nav>
                 <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
                     <div className="fixed inset-0 z-50" />
@@ -91,18 +111,20 @@ const Navbar = () => {
                                     ))}
                                 </div>
                                 <div className="py-6">
+
                                     <Link
                                         href="/login"
                                         className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-white/5"
                                     >
                                         Log in
                                     </Link>
-                                    <Link
+
+                                    {/* <Link
                                         href="/register"
                                         className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-white/5"
                                     >
                                         Register
-                                    </Link>
+                                    </Link> */}
                                 </div>
                             </div>
                         </div>
