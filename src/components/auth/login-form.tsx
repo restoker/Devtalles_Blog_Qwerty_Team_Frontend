@@ -1,5 +1,4 @@
 import { Input } from '@/components/ui/input';
-import { Icons } from '@/components/icons';
 import StarBorder from './star-border';
 import { loginSchema } from '@/types/login-schema';
 import z from 'zod';
@@ -9,6 +8,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { useAction } from "next-safe-action/hooks";
 import { loginWithEmailAndPasswordAction } from '@/server/actions/login-action';
 import clsx from 'clsx';
+import { toast } from 'sonner';
+import { CheckCircleIcon, FaceFrownIcon } from '@heroicons/react/24/outline';
+import SocialForm from './Social-form';
 
 interface LoginFormProps {
   onToggle: () => void;
@@ -26,16 +28,44 @@ export function LoginForm({ onToggle }: LoginFormProps) {
   });
 
   const { execute, status } = useAction(loginWithEmailAndPasswordAction, {
-    onSuccess: () => {
-      console.log('success');
+    onSuccess: ({ data }) => {
+      if (data.ok) {
+        toast.success(data.msg || '', {
+          classNames: {
+            toast: 'text-white bg-lime-600',
+            closeButton: 'bg-lime-600 text-red-700'
+          },
+          closeButton: true,
+          position: 'top-right',
+          // duration: Infinity,
+          icon: <CheckCircleIcon className='animate-bounce' />,
+          duration: 2000,
+        });
+        window.location.replace('/');
+      }
+
+      if (!data.ok) {
+        toast.error(data.msg || '', {
+          classNames: {
+            toast: 'text-white bg-red-500',
+            closeButton: 'bg-red-500 text-red-700'
+          },
+          closeButton: true,
+          position: 'top-right',
+          // duration: Infinity,
+          icon: <FaceFrownIcon className='animate-bounce' />,
+          duration: 2000,
+        });
+      }
     },
     onError: () => {
-      console.log('error');
+      toast.error('Algo salio mal');
     }
   })
 
   function onSubmit(values: z.infer<typeof loginSchema>) {
-    console.log(values);
+    // console.log(values);
+    execute(values);
   }
 
   return (
@@ -121,17 +151,7 @@ export function LoginForm({ onToggle }: LoginFormProps) {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
-            <StarBorder position="left">
-              <Icons.google className="h-5 w-5 mx-auto" />
-            </StarBorder>
-            <StarBorder position="left">
-              <Icons.discord className="h-5 w-5 mx-auto" />
-            </StarBorder>
-            <StarBorder position="left">
-              <Icons.linkedin className="h-5 w-5 mx-auto" />
-            </StarBorder>
-          </div>
+          <SocialForm />
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
             ¿No tienes una cuenta?{' '}

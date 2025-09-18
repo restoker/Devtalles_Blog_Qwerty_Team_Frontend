@@ -58,7 +58,7 @@ const Blogs = () => {
                 <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
                     <div className='flex justify-between items-center'>
                         <div>
-                            <h2 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-3xl">Blogs:</h2>
+                            <h2 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-3xl">Top Blogs:</h2>
                             <p className="mt-2 text-lg/8 text-gray-400">Here are some of our blogs.</p>
                         </div>
                         <Link href="/blogs" className="text-white/50 flex items-center gap-1 group cursor-pointer">
