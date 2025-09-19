@@ -4,11 +4,12 @@ import { User } from "./user";
 
 export interface Post {
     id: number;
-    author_id: User;
+    author_id: number;
     title: string;
+    author: User;
     description: string;
     content: string;
-    cover: string[];
+    images: string[];
     tags: TagsBlog[];
     category: CategoriesBlog;
     category_id: number;

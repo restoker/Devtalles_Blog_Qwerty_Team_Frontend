@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Comments from './_ui/Comments';
 
 export default async function BlogPage({ params }: { params: { id: string } }) {
-    const postId = await params.id;
+    const { id: postId } = await params;
     console.log(postId);
     return (
         <div className="relative min-h-screen w-full bg-background/80">
