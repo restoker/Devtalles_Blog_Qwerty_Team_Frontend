@@ -2,14 +2,12 @@ import { Post } from '@/interfaces'
 import { auth } from '@/server/auth'
 import {
     Disclosure,
-    DisclosureButton,
-    DisclosurePanel,
     Menu,
     MenuButton,
     MenuItem,
     MenuItems,
 } from '@headlessui/react'
-import { AcademicCapIcon, ChevronDownIcon, FunnelIcon, PlusIcon, StarIcon } from '@heroicons/react/24/outline'
+import { ChevronDownIcon, PlusIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import BLog from './_ui/BLog'
 
@@ -51,81 +49,81 @@ const sortOptions = [
     { name: 'Price: Low to High', href: '#', current: false },
     { name: 'Price: High to Low', href: '#', current: false },
 ]
-const posts = [
-    {
-        id: 1,
-        title: 'Boost your conversion rate',
-        href: '#',
-        description:
-            'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-        imageUrl:
-            '/img/img1.webp',
-        date: 'Mar 26, 2025',
-        datetime: '2020-03-16',
-        category: { title: 'Marketing', href: '#' },
-        author: {
-            name: 'Nombre del autor',
-            role: 'Full Stack Developer',
-            href: '#',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-    },
-    {
-        id: 2,
-        title: 'Boost your conversion rate',
-        href: '#',
-        description: 'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-        imageUrl:
-            '/img/img2.webp',
-        date: 'Mar 26, 2025',
-        datetime: '2020-03-16',
-        category: { title: 'Marketing', href: '#' },
-        author: {
-            name: 'Nombre del autor',
-            role: 'Devops Engineer',
-            href: '#',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-    },
-    {
-        id: 3,
-        title: 'Boost your conversion rate',
-        href: '#',
-        description: 'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-        imageUrl:
-            '/img/img3.webp',
-        date: 'Mar 26, 2025',
-        datetime: '2020-03-16',
-        category: { title: 'Marketing', href: '#' },
-        author: {
-            name: 'Nombre del autor',
-            role: 'Designer',
-            href: '#',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-    },
-    {
-        id: 4,
-        title: 'Boost your conversion rate',
-        href: '#',
-        description: 'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-        imageUrl:
-            '/img/img4.webp',
-        date: 'Mar 26, 2025',
-        datetime: '2020-03-16',
-        category: { title: 'Marketing', href: '#' },
-        author: {
-            name: 'Nombre del autor',
-            role: 'Designer',
-            href: '#',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-    }
-]
+// const posts = [
+//     {
+//         id: 1,
+//         title: 'Boost your conversion rate',
+//         href: '#',
+//         description:
+//             'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+//         imageUrl:
+//             '/img/img1.webp',
+//         date: 'Mar 26, 2025',
+//         datetime: '2020-03-16',
+//         category: { title: 'Marketing', href: '#' },
+//         author: {
+//             name: 'Nombre del autor',
+//             role: 'Full Stack Developer',
+//             href: '#',
+//             imageUrl:
+//                 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//         },
+//     },
+//     {
+//         id: 2,
+//         title: 'Boost your conversion rate',
+//         href: '#',
+//         description: 'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+//         imageUrl:
+//             '/img/img2.webp',
+//         date: 'Mar 26, 2025',
+//         datetime: '2020-03-16',
+//         category: { title: 'Marketing', href: '#' },
+//         author: {
+//             name: 'Nombre del autor',
+//             role: 'Devops Engineer',
+//             href: '#',
+//             imageUrl:
+//                 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//         },
+//     },
+//     {
+//         id: 3,
+//         title: 'Boost your conversion rate',
+//         href: '#',
+//         description: 'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+//         imageUrl:
+//             '/img/img3.webp',
+//         date: 'Mar 26, 2025',
+//         datetime: '2020-03-16',
+//         category: { title: 'Marketing', href: '#' },
+//         author: {
+//             name: 'Nombre del autor',
+//             role: 'Designer',
+//             href: '#',
+//             imageUrl:
+//                 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//         },
+//     },
+//     {
+//         id: 4,
+//         title: 'Boost your conversion rate',
+//         href: '#',
+//         description: 'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+//         imageUrl:
+//             '/img/img4.webp',
+//         date: 'Mar 26, 2025',
+//         datetime: '2020-03-16',
+//         category: { title: 'Marketing', href: '#' },
+//         author: {
+//             name: 'Nombre del autor',
+//             role: 'Designer',
+//             href: '#',
+//             imageUrl:
+//                 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//         },
+//     }
+// ]
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -141,7 +139,6 @@ export default async function Blogs() {
         },
     });
     const blogsData = await blogs.json();
-    console.log(blogsData);
     const postsServer = blogsData.data.posts as Post[];
     // const postsServer = [1];
     return (
