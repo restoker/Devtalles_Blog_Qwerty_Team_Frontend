@@ -22,7 +22,7 @@ export const createBlogAction = actionClient
                     title,
                     description: resume,
                     content,
-                    cover: [cover],
+                    images: [cover],
                     tags,
                     category_id: categories.toString(),
                 }),

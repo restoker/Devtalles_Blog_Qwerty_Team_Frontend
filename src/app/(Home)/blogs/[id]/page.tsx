@@ -1,6 +1,9 @@
 import Image from 'next/image';
+import Comments from './_ui/Comments';
 
-export default function BlogPage({ params }: { params: { id: string } }) {
+export default async function BlogPage({ params }: { params: { id: string } }) {
+    const postId = await params.id;
+    console.log(postId);
     return (
         <div className="relative min-h-screen w-full bg-background/80">
             <div className="aurora-bg">
@@ -146,6 +149,9 @@ export default function BlogPage({ params }: { params: { id: string } }) {
                             </p>
                         </div>
                     </article>
+                    <section aria-labelledby="related-heading" className="mt-10 border-t border-gray-200">
+                        <Comments />
+                    </section>
                 </div>
             </main>
         </div>

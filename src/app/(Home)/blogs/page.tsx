@@ -9,7 +9,7 @@ import {
     MenuItem,
     MenuItems,
 } from '@headlessui/react'
-import { ChevronDownIcon, FunnelIcon, PlusIcon, StarIcon } from '@heroicons/react/24/outline'
+import { AcademicCapIcon, ChevronDownIcon, FunnelIcon, PlusIcon, StarIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 
 const filters = {
@@ -140,8 +140,9 @@ export default async function Blogs() {
         },
     });
     const blogsData = await blogs.json();
-    const postsServer = blogsData.data.posts as Post[];
-
+    console.log(blogsData);
+    // const postsServer = blogsData.data.posts as Post[];
+    const postsServer = [1];
     return (
         <>
             <div className="bg-zinc-950 py-10">
@@ -172,23 +173,10 @@ export default async function Blogs() {
                         </h2>
                         <div className="relative col-start-1 row-start-1 py-4">
                             <div className="mx-auto flex max-w-7xl divide-x divide-gray-100 px-4 text-sm sm:px-6 lg:px-8">
-                                <div className="pr-6">
-                                    <DisclosureButton className="group flex items-center font-medium text-gray-200 hover:text-purple-600">
-                                        <FunnelIcon
-                                            aria-hidden="true"
-                                            className="mr-2 size-5 flex-none text-gray-100 group-hover:text-purple-600"
-                                        />
-                                        2 Filters
-                                    </DisclosureButton>
-                                </div>
-                                <div className="pl-6">
-                                    <button type="button" className="text-gray-100">
-                                        Clear all
-                                    </button>
-                                </div>
+
                             </div>
                         </div>
-                        <DisclosurePanel className="border-t border-gray-200 py-10 bg-zinc-900">
+                        {/* <DisclosurePanel className="border-t border-gray-200 py-10 bg-zinc-900">
                             <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
                                 <div className="grid auto-rows-min grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-6">
                                     <fieldset>
@@ -371,13 +359,13 @@ export default async function Blogs() {
                                     </fieldset>
                                 </div>
                             </div>
-                        </DisclosurePanel>
+                        </DisclosurePanel> */}
                         {/* menu sort */}
                         <div className="col-start-1 row-start-1 py-4">
                             <div className="mx-auto flex max-w-7xl justify-end px-4 sm:px-6 lg:px-8">
                                 <Menu as="div" className="relative inline-block">
                                     <div className="flex">
-                                        <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-100 hover:text-purple-600">
+                                        <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-100 hover:text-purple-600 ring-0 outline-none cursor-pointer">
                                             Sort
                                             <ChevronDownIcon
                                                 aria-hidden="true"
@@ -416,118 +404,163 @@ export default async function Blogs() {
                             Blogs
                         </h2>
                         <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                            {posts.map((post) => (
-                                <div key={post.id}>
-                                    <article key={post.id} className="flex flex-col items-start justify-between bg-zinc-800 rounded-2xl group">
-                                        <Link href={`/blogs/${post.id}`} className="relative w-full overflow-hidden rounded-t-2xl">
-                                            <img
-                                                alt=""
-                                                src={post.imageUrl}
-                                                className="aspect-video w-full rounded-t-2xl bg-gray-100 object-cover sm:aspect-2/1 lg:aspect-3/2 group-hover:scale-105 transition-all duration-500 hover:blur-sm"
-                                            />
-                                            <div className="absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset" />
-                                        </Link>
-                                        <div className="w-full px-2 pb-2">
-                                            <div className="mt-8 flex items-center gap-x-4 text-xs">
-                                                <time dateTime={post.datetime} className="text-gray-400">
-                                                    {post.date}
-                                                </time>
-                                                <Link
-                                                    href={`/blogs/${post.id}`}
-                                                    className="relative z-10 rounded-full px-3 py-1.5 font-medium bg-gray-50/5 text-white hover:bg-gray-100/20"
+                            {
+                                postsServer.length === 0
+                                    ?
+                                    <div className='w-dvw max-w-xl lg:max-w-6xl mx-auto'>
+                                        <div className="text-center flex items-center justify-center flex-col">
+                                            {/* <svg
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                                aria-hidden="true"
+                                                className="mx-auto size-12 text-gray-500"
+                                            >
+                                                <path
+                                                    d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+                                                    strokeWidth={2}
+                                                    vectorEffect="non-scaling-stroke"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                />
+                                            </svg> */}
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="mx-auto size-12 text-gray-500">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                                            </svg>
+                                            <h3 className="mt-2 text-sm font-semibold text-white">Dont have any blog</h3>
+                                            <p className="mt-1 text-sm text-gray-400">Get started by creating a new blog.</p>
+                                            {/* <div className="mt-6">
+                                                <button
+                                                    type="button"
+                                                    className="inline-flex items-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                                                 >
-                                                    {post.category.title}
-                                                </Link>
-                                            </div>
-                                            <div className="group relative flex justify-center w-full flex-col items-center">
-                                                <h3 className="mt-3 text-lg/6 font-semibold text-white group-hover:text-gray-100">
-                                                    <Link href={`/blogs/${post.id}`}>
-                                                        <span className="absolute inset-0" />
-                                                        {post.title}
-                                                    </Link>
-                                                </h3>
-                                                <p className="mt-5 line-clamp-2 text-sm/6 text-gray-400">{post.description}</p>
-                                            </div>
-                                            <div className="relative mt-8 flex items-center gap-x-4">
-                                                <img alt="" src={post.author.imageUrl} className="size-10 rounded-full bg-gray-100" />
-                                                <div className="text-sm/6">
-                                                    <p className="font-semibold text-gray-300">
-                                                        <Link href={post.author.href}>
-                                                            <span className="absolute inset-0" />
-                                                            {post.author.name}
-                                                        </Link>
-                                                    </p>
-                                                    <p className="text-gray-400">{post.author.role}</p>
-                                                </div>
-                                            </div>
+                                                    <PlusIcon aria-hidden="true" className="mr-1.5 -ml-0.5 size-5" />
+                                                    New Blog
+                                                </button>
+                                            </div> */}
                                         </div>
-                                    </article>
-                                </div>
-                            ))}
+                                    </div>
+                                    :
+                                    <>
+                                        {posts.map((post) => (
+                                            <div key={post.id}>
+                                                <article key={post.id} className="flex flex-col items-start justify-between bg-zinc-800 rounded-2xl group">
+                                                    <Link href={`/blogs/${post.id}`} className="relative w-full overflow-hidden rounded-t-2xl">
+                                                        <img
+                                                            alt=""
+                                                            src={post.imageUrl}
+                                                            className="aspect-video w-full rounded-t-2xl bg-gray-100 object-cover sm:aspect-2/1 lg:aspect-3/2 group-hover:scale-105 transition-all duration-500 hover:blur-sm"
+                                                        />
+                                                        <div className="absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset" />
+                                                    </Link>
+                                                    <div className="w-full px-2 pb-2">
+                                                        <div className="mt-8 flex items-center gap-x-4 text-xs">
+                                                            <time dateTime={post.datetime} className="text-gray-400">
+                                                                {post.date}
+                                                            </time>
+                                                            <Link
+                                                                href={`/blogs/${post.id}`}
+                                                                className="relative z-10 rounded-full px-3 py-1.5 font-medium bg-gray-50/5 text-white hover:bg-gray-100/20"
+                                                            >
+                                                                {post.category.title}
+                                                            </Link>
+                                                        </div>
+                                                        <div className="group relative flex justify-center w-full flex-col items-center">
+                                                            <h3 className="mt-3 text-lg/6 font-semibold text-white group-hover:text-gray-100">
+                                                                <Link href={`/blogs/${post.id}`}>
+                                                                    <span className="absolute inset-0" />
+                                                                    {post.title}
+                                                                </Link>
+                                                            </h3>
+                                                            <p className="mt-5 line-clamp-2 text-sm/6 text-gray-400">{post.description}</p>
+                                                        </div>
+                                                        <div className="relative mt-8 flex items-center gap-x-4">
+                                                            <img alt="" src={post.author.imageUrl} className="size-10 rounded-full bg-gray-100" />
+                                                            <div className="text-sm/6">
+                                                                <p className="font-semibold text-gray-300">
+                                                                    <Link href={post.author.href}>
+                                                                        <span className="absolute inset-0" />
+                                                                        {post.author.name}
+                                                                    </Link>
+                                                                </p>
+                                                                <p className="text-gray-400">{post.author.role}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                        ))}
+                                    </>
+                            }
                         </div>
                     </section>
                     {/* Pagination */}
-                    <nav
-                        aria-label="Pagination"
-                        className="mx-auto mt-32 flex max-w-7xl justify-between px-4 text-sm font-medium text-gray-700 sm:px-6 lg:px-8"
-                    >
-                        <div className="min-w-0 flex-1">
-                            <a
-                                href="#"
-                                className="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/25 focus:ring-offset-1 focus:ring-offset-purple-600 focus:outline-hidden"
+                    {
+                        postsServer.length > 0
+                            ?
+                            <nav
+                                aria-label="Pagination"
+                                className="mx-auto mt-32 flex max-w-7xl justify-between px-4 text-sm font-medium text-gray-700 sm:px-6 lg:px-8"
                             >
-                                Previous
-                            </a>
-                        </div>
-                        <div className="hidden space-x-2 sm:flex">
-                            {/* Current: "border-purple-600 ring-1 ring-purple-600", Default: "border-gray-300" */}
-                            <a
-                                href="#"
-                                className="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/25 focus:ring-offset-1 focus:ring-offset-purple-600 focus:outline-hidden"
-                            >
-                                1
-                            </a>
-                            <a
-                                href="#"
-                                className="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/25 focus:ring-offset-1 focus:ring-offset-purple-600 focus:outline-hidden"
-                            >
-                                2
-                            </a>
-                            <a
-                                href="#"
-                                className="inline-flex h-10 items-center rounded-md border border-purple-600 bg-white px-4 ring-1 ring-purple-600 hover:bg-gray-100 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/25 focus:ring-offset-1 focus:ring-offset-purple-600 focus:outline-hidden"
-                            >
-                                3
-                            </a>
-                            <span className="inline-flex h-10 items-center px-1.5 text-gray-500">...</span>
-                            <a
-                                href="#"
-                                className="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/25 focus:ring-offset-1 focus:ring-offset-purple-600 focus:outline-hidden"
-                            >
-                                8
-                            </a>
-                            <a
-                                href="#"
-                                className="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/25 focus:ring-offset-1 focus:ring-offset-purple-600 focus:outline-hidden"
-                            >
-                                9
-                            </a>
-                            <a
-                                href="#"
-                                className="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/25 focus:ring-offset-1 focus:ring-offset-purple-600 focus:outline-hidden"
-                            >
-                                10
-                            </a>
-                        </div>
-                        <div className="flex min-w-0 flex-1 justify-end">
-                            <a
-                                href="#"
-                                className="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/25 focus:ring-offset-1 focus:ring-offset-purple-600 focus:outline-hidden"
-                            >
-                                Next
-                            </a>
-                        </div>
-                    </nav>
+                                <div className="min-w-0 flex-1">
+                                    <a
+                                        href="#"
+                                        className="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/25 focus:ring-offset-1 focus:ring-offset-purple-600 focus:outline-hidden"
+                                    >
+                                        Previous
+                                    </a>
+                                </div>
+                                <div className="hidden space-x-2 sm:flex">
+                                    {/* Current: "border-purple-600 ring-1 ring-purple-600", Default: "border-gray-300" */}
+                                    <a
+                                        href="#"
+                                        className="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/25 focus:ring-offset-1 focus:ring-offset-purple-600 focus:outline-hidden"
+                                    >
+                                        1
+                                    </a>
+                                    <a
+                                        href="#"
+                                        className="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/25 focus:ring-offset-1 focus:ring-offset-purple-600 focus:outline-hidden"
+                                    >
+                                        2
+                                    </a>
+                                    <a
+                                        href="#"
+                                        className="inline-flex h-10 items-center rounded-md border border-purple-600 bg-white px-4 ring-1 ring-purple-600 hover:bg-gray-100 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/25 focus:ring-offset-1 focus:ring-offset-purple-600 focus:outline-hidden"
+                                    >
+                                        3
+                                    </a>
+                                    <span className="inline-flex h-10 items-center px-1.5 text-gray-500">...</span>
+                                    <a
+                                        href="#"
+                                        className="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/25 focus:ring-offset-1 focus:ring-offset-purple-600 focus:outline-hidden"
+                                    >
+                                        8
+                                    </a>
+                                    <a
+                                        href="#"
+                                        className="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/25 focus:ring-offset-1 focus:ring-offset-purple-600 focus:outline-hidden"
+                                    >
+                                        9
+                                    </a>
+                                    <a
+                                        href="#"
+                                        className="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/25 focus:ring-offset-1 focus:ring-offset-purple-600 focus:outline-hidden"
+                                    >
+                                        10
+                                    </a>
+                                </div>
+                                <div className="flex min-w-0 flex-1 justify-end">
+                                    <a
+                                        href="#"
+                                        className="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-purple-600 focus:ring-2 focus:ring-purple-600/25 focus:ring-offset-1 focus:ring-offset-purple-600 focus:outline-hidden"
+                                    >
+                                        Next
+                                    </a>
+                                </div>
+                            </nav>
+                            : null
+                    }
                 </div>
             </div>
         </>
