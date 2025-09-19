@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache";
 export const createBlogAction = actionClient
     .inputSchema(newBlogSchema)
     .action(async ({ parsedInput: { title, resume, content, cover, tags, categories, tokenAuth }, ctx: { } }) => {
-        console.log(tokenAuth);
+        // console.log(tokenAuth);
         try {
             const url = process.env.ADDRESS_SERVER;
             console.log(url);
