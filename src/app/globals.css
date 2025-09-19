@@ -37,3 +37,7 @@ body {
 .tiptap ul {
   all: revert;
 }
+
+.bg-popover {
+  background-color: var(--background);
+}

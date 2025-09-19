@@ -5,19 +5,25 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import z from 'zod';
 import { newBlogSchema } from '@/types/new-blog-schema';
-import { useSearchParams } from 'next/navigation';
-import { ChevronDownIcon, PhotoIcon } from '@heroicons/react/24/outline';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { CheckCircleIcon, ChevronDownIcon, PhotoIcon } from '@heroicons/react/24/outline';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import TipTap from './TipTap';
-import { CategoriesBlog } from '@/interfaces';
+import { CategoriesBlog, TagsBlog } from '@/interfaces';
 import { UploadButton } from '@/app/api/uploadthing/upload';
 import { useAction } from 'next-safe-action/hooks';
 import { createBlogAction } from '@/server/actions/create-blog-action';
+import { MultiSelect } from '@/components/multi-select';
+import clsx from 'clsx';
+import { toast } from 'sonner';
+import type { Session } from 'next-auth';
+import { signOut } from 'next-auth/react';
 
 
-const FormNewBlog = ({ categories }: { categories: CategoriesBlog[] }) => {
-    // const router = useRouter();
+const FormNewBlog = ({ categories, tags, session }: { categories: CategoriesBlog[]; tags: TagsBlog[]; session: Session }) => {
+    const router = useRouter();
+
     const [coverUploading, setCoverUploading] = useState(false);
     const params = useSearchParams();
     const editMode = params.get('id');
@@ -27,7 +33,7 @@ const FormNewBlog = ({ categories }: { categories: CategoriesBlog[] }) => {
         defaultValues: {
             title: "",
             resume: "",
-            description: "",
+            content: "",
             cover: "",
             tags: [],
             categories: categories[0].id.toString(),
@@ -36,15 +42,46 @@ const FormNewBlog = ({ categories }: { categories: CategoriesBlog[] }) => {
     });
 
     const { execute, status } = useAction(createBlogAction, {
-        onSuccess: () => {
-            form.reset();
+        onSuccess: ({ data }) => {
+            if (data.ok) {
+                toast.success(data.msg, {
+                    classNames: {
+                        toast: 'text-white bg-lime-600',
+                        closeButton: 'bg-lime-600 text-red-700'
+                    },
+                    closeButton: true,
+                    position: 'top-right',
+                    // duration: Infinity,
+                    icon: <CheckCircleIcon className='animate-bounce' />,
+                    duration: 2000,
+                });
+                form.reset();
+                router.push('/blogs');
+            }
+
+            if (!data.ok) {
+                toast.error(data.msg, {
+                    classNames: {
+                        toast: 'text-white bg-red-500',
+                        closeButton: 'bg-red-500 text-red-700'
+                    },
+                    closeButton: true,
+                    position: 'top-right',
+                    // duration: Infinity,
+                    icon: <CheckCircleIcon className='animate-bounce' />,
+                    duration: 2000,
+                });
+                if (data.msg === 'Token inválido') {
+                    signOut({ callbackUrl: "/login" })
+                }
+            }
         }
     })
 
     // const categoriesWatch = form.watch('categories');
     // console.log(categoriesWatch);
-    console.log(form.formState.errors);
-    console.log(form.watch('cover'));
+    // console.log(form.formState.errors);
+    // console.log(form.watch('cover'));
     function checkBlog() {
         throw new Error('Function not implemented.');
     }
@@ -60,7 +97,14 @@ const FormNewBlog = ({ categories }: { categories: CategoriesBlog[] }) => {
 
 
     function onSubmit(values: z.infer<typeof newBlogSchema>) {
-        console.log(values);
+        if (!session.user.tokenAuth) {
+            return toast.error("You need to be logged in to create a blog");
+        }
+        const dataToSend = {
+            ...values,
+            tokenAuth: session.user.tokenAuth,
+        }
+        execute(dataToSend);
     }
 
     return (
@@ -119,7 +163,7 @@ const FormNewBlog = ({ categories }: { categories: CategoriesBlog[] }) => {
                                 <div className="col-span-full">
                                     <FormField
                                         control={form.control}
-                                        name="description"
+                                        name="content"
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel className="block text-sm/6 font-medium text-white"> Content of blog</FormLabel>
@@ -190,7 +234,7 @@ const FormNewBlog = ({ categories }: { categories: CategoriesBlog[] }) => {
                             <p className="mt-1 text-sm/6 text-gray-400">Add tags and categories to your blog.</p>
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                 <div className="sm:col-span-3">
-                                    <label htmlFor="first-name" className="block text-sm/6 font-medium text-white">
+                                    {/* <label htmlFor="first-name" className="block text-sm/6 font-medium text-white">
                                         Tags
                                     </label>
                                     <div className="mt-2">
@@ -201,7 +245,36 @@ const FormNewBlog = ({ categories }: { categories: CategoriesBlog[] }) => {
                                             autoComplete="given-name"
                                             className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                                         />
-                                    </div>
+                                    </div> */}
+                                    <FormField
+                                        control={form.control}
+                                        name="tags"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Tags</FormLabel>
+                                                <FormControl>
+                                                    <div className=" mt-2">
+                                                        <MultiSelect
+                                                            {...field}
+                                                            options={tags.map((tag) => ({ label: tag.name, value: tag.id.toString() }))}
+                                                            value={field.value}
+                                                            onValueChange={field.onChange}
+                                                            placeholder="Full width multi-select"
+                                                            className="w-full"
+                                                            maxCount={7}
+                                                            variant={'inverted'}
+                                                            animationConfig={{
+                                                                badgeAnimation: "bounce",
+                                                                popoverAnimation: "scale",
+                                                                optionHoverAnimation: "glow",
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
                                 </div>
                                 <div className="sm:col-span-3">
                                     {/* <label htmlFor="country" className="block text-sm/6 font-medium text-white">
@@ -253,8 +326,13 @@ const FormNewBlog = ({ categories }: { categories: CategoriesBlog[] }) => {
                             Cancel
                         </button>
                         <button
+                            disabled={status === 'executing' || Object.keys(form.formState.errors).length > 0}
                             type="submit"
-                            className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                            className={clsx(
+                                "rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 cursor-pointer",
+                                status === 'executing' || Object.keys(form.formState.errors).length > 0 ? 'opacity-50 bg-gray-500 cursor-not-allowed' : 'opacity-100',
+                                !form.formState.isDirty ? 'opacity-50 bg-gray-500 cursor-not-allowed' : 'opacity-100',
+                            )}
                         >
                             Save
                         </button>

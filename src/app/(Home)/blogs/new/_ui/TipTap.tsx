@@ -42,7 +42,7 @@ const TipTap = ({ value, setValue }: { value: string, setValue: UseFormSetValue<
         content: value,
         onUpdate: ({ editor }) => {
             const content = editor.getHTML();
-            setValue('description', content, {
+            setValue('content', content, {
                 shouldValidate: true,
                 shouldDirty: true,
                 // shouldTouch: true,

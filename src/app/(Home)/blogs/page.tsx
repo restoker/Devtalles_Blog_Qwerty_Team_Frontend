@@ -1,3 +1,4 @@
+import { Post } from '@/interfaces'
 import { auth } from '@/server/auth'
 import {
     Disclosure,
@@ -131,6 +132,15 @@ function classNames(...classes: string[]) {
 export default async function Blogs() {
     const session = await auth();
     // console.log(session);
+    const blogs = await fetch(`${process.env.ADDRESS_SERVER}/api/posts`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session?.user?.tokenAuth}`,
+        },
+    });
+    const blogsData = await blogs.json();
+    const postsServer = blogsData.data.posts as Post[];
 
     return (
         <>

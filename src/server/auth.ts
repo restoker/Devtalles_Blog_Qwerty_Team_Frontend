@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import gitHub from 'next-auth/providers/github';
 import discord from 'next-auth/providers/discord';
 import { loginSchema } from "@/types/login-schema";
+import { ExtendUser } from "@/next-auth";
 
 export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
     secret: process.env.AUTH_SECRET,
@@ -14,8 +15,20 @@ export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
     },
     callbacks: {
         async jwt({ token, user, account }) {
-            console.log({ token });
-            console.log({ account });
+            // console.log({ token });
+            // console.log({ account });
+            // console.log({ user });
+            const usuario = user as ExtendUser;
+            // if (token) {
+            //     token.name = user.name;-
+            //     token.email = user.email;
+            //     token.role = user.role;
+            //     token.image = user.image;
+            //     return token;
+            // }
+            if (user) {
+                token.tokenAuth = usuario.tokenAuth;
+            }
 
             if (account && account.provider === 'discord') {
                 console.log('Hay account :D');
@@ -52,7 +65,7 @@ export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
                     token.name = existsAccountJson.user.name;
                     token.email = existsAccountJson.user.email;
                     token.role = existsAccountJson.user.role;
-                    token.image = existsAccountJson.user.picture;
+                    token.image = existsAccountJson.user.image;
                     return token;
                 }
                 //    si no existe el usuario crear usuario en la base de datos
@@ -87,15 +100,22 @@ export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
             });
             const existUserJson = await existUser.json();
             if (!existUserJson.ok) return token;
+            // console.log({ existUserJson });
             token.name = existUserJson.data.name;
             token.lastname = existUserJson.data.lastname;
             token.email = existUserJson.data.email;
             token.role = existUserJson.data.role;
-            token.image = existUserJson.data.image;
+            // if (user) {
+            // token.tokenAuth = usuario.tokenAuth;
+            // // }
+            // token.tokenAuth = existUserJson.access_token;
 
             return token;
         },
-        async session({ session, user, token }) {
+        async session({ session, user, token, }) {
+            // console.log({ user });
+            // console.log({ token });
+            // console.log({ session });
 
             if (session && token.sub) {
                 session.user.id = token.sub;
@@ -109,6 +129,7 @@ export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
                 session.user.name = token.name as string;
                 session.user.lastname = token.lastname as string;
                 session.user.email = token.email as string;
+                session.user.tokenAuth = token.tokenAuth as string;
             }
             return session;
         },
@@ -140,14 +161,18 @@ export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
                     const userJson = await user.json();
 
                     if (!userJson.ok) return null;
-
+                    // console.log(userJson);
+                    const usuario = {
+                        ...userJson.data.user,
+                        tokenAuth: userJson.data.access_token,
+                    }
                     // if (!userJson.ok || !userJson.password) return null;
                     // if (!userJson.hasOwnProperty("ok")) return null;
 
                     // verificar el password
                     // const passCorrect = await bcrypt.compare(password, userJson.password);
                     // if (userJson.hasOwnProperty("user")) {
-                    return userJson.data.user;
+                    return usuario;
                     // }
                     // if (!passCorrect) return null;
                 }
