@@ -2,14 +2,12 @@ import { Post } from '@/interfaces'
 import { auth } from '@/server/auth'
 import {
     Disclosure,
-    DisclosureButton,
-    DisclosurePanel,
     Menu,
     MenuButton,
     MenuItem,
     MenuItems,
 } from '@headlessui/react'
-import { AcademicCapIcon, ChevronDownIcon, FunnelIcon, PlusIcon, StarIcon } from '@heroicons/react/24/outline'
+import { ChevronDownIcon, PlusIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import BLog from './_ui/BLog'
 
@@ -51,81 +49,6 @@ const sortOptions = [
     { name: 'Price: Low to High', href: '#', current: false },
     { name: 'Price: High to Low', href: '#', current: false },
 ]
-const posts = [
-    {
-        id: 1,
-        title: 'El Poder de los Componentes en React',
-        href: '/blogs/componentes-react',
-        description:
-            'Aprende a pensar en componentes reutilizables y a construir interfaces de usuario complejas de manera declarativa y eficiente con la librería más popular.',
-        imageUrl:
-            'https://i.pinimg.com/1200x/cb/a0/b8/cba0b89d2bf2d96a1ed26edb5849f804.jpg',
-        date: 'Mar 26, 2025',
-        datetime: '2020-03-16',
-        category: { title: 'React', href: '#' },
-        author: {
-            name: 'Alex Rivera',
-            role: 'Full Stack Developer',
-            href: '#',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-    },
-    {
-        id: 2,
-        title: 'Docker: Contenedores para un Desarrollo Consistente',
-        href: '/blogs/docker-blog',
-        description: 'Descubre cómo Docker simplifica el desarrollo y despliegue de aplicaciones empaquetándolas en contenedores ligeros y portátiles.',
-        imageUrl:
-            'https://i.pinimg.com/1200x/3c/d2/6f/3cd26f91557248ed05f4626f8e7bdfde.jpg',
-        date: 'Mar 26, 2025',
-        datetime: '2020-03-16',
-        category: { title: 'DevOps', href: '#' },
-        author: {
-            name: 'Juan Suasnavas',
-            role: 'Devops Engineer',
-            href: '#',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-    },
-    {
-        id: 3,
-        title: 'JavaScript Moderno: Más Allá de ES6',
-        href: '/blogs/javascript-moderno',
-        description: 'Explora las características más recientes de JavaScript que están cambiando la forma en que escribimos código para la web, desde el encadenamiento opcional hasta BigInt.',
-        imageUrl:
-            'https://i.pinimg.com/1200x/b4/d5/e3/b4d5e3a47472d0a6b2606dd065cb0f93.jpg',
-        date: 'Mar 26, 2025',
-        datetime: '2020-03-16',
-        category: { title: 'JavaScript', href: '#' },
-        author: {
-            name: 'Milena Quitama',
-            role: 'Web Designer',
-            href: '#',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-    },
-    {
-        id: 4,
-        title: 'Bases de Datos SQL vs. NoSQL: ¿Cuál elegir?',
-        href: '/blogs/sql-vs-nosql',
-        description: 'Entiende las diferencias clave, ventajas y casos de uso de las bases de datos relacionales y no relacionales para tomar la mejor decisión para tu proyecto.',
-        imageUrl:
-            'https://i.pinimg.com/736x/bd/e1/a1/bde1a1f4653019057400a1c025873407.jpg',
-        date: 'Mar 26, 2025',
-        datetime: '2020-03-16',
-        category: { title: 'Database', href: '#' },
-        author: {
-            name: 'Carla Moreno',
-            role: 'Software Engineer',
-            href: '#',
-            imageUrl:
-                'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-    }
-]
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -141,7 +64,6 @@ export default async function Blogs() {
         },
     });
     const blogsData = await blogs.json();
-    console.log(blogsData);
     const postsServer = blogsData.data.posts as Post[];
     // const postsServer = [1];
     return (
