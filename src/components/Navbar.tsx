@@ -13,7 +13,7 @@ const navigation = [
     { name: 'Blogs', href: '/blogs' },
     { name: "FAQs", href: '#' },
     { name: 'About', href: '/about' },
-    { name: 'Contact', href: '#' },
+    { name: 'Contact', href: '/contact' },
     { name: 'Dashboard', href: '/admin' },
 ]
 const Navbar = () => {
