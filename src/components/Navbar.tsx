@@ -13,7 +13,8 @@ const navigation = [
     { name: 'Blogs', href: '/blogs' },
     { name: "FAQs", href: '#' },
     { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/admin' },
+    { name: 'Contact', href: '#' },
+    { name: 'Dashboard', href: '/admin' },
 ]
 const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
