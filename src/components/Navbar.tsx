@@ -11,9 +11,10 @@ import { Session } from 'next-auth';
 import PopperMenuUser from './PopperMenuUser';
 const navigation = [
     { name: 'Blogs', href: '/blogs' },
-    { name: "FAQs", href: '#' },
+    { name: "FAQs", href: '/faqs' },
     { name: 'About', href: '/about' },
-    { name: 'Contact', href: '#' },
+    { name: 'Contact', href: '/contact' },
+    { name: 'Dashboard', href: '/admin' },
 ]
 const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
