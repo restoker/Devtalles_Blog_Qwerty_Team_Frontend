@@ -1,22 +1,35 @@
 import Image from 'next/image';
 import Comments from './_ui/Comments';
+// import { Heart } from 'lucide-react';
+// import { HeartIcon } from '@heroicons/react/24/outline';
+import LikeButton from './_ui/LikeButton';
+import { auth } from '@/server/auth';
+// import { redirect } from 'next/navigation';
 
 export default async function BlogPage({ params }: { params: { id: string } }) {
     const { id: postId } = await params;
+    const session = await auth();
+    // console.log(session);
+    const tokenAuth = session?.user?.tokenAuth || '';
     const url = `${process.env.ADDRESS_SERVER}/api/posts/${postId}`;
-    const getPost = await fetch(url);
-    const response = await getPost.json();
-    // console.log(response);
-    const post = response.data;
+    const promiseLike = fetch(`${process.env.ADDRESS_SERVER}/api/likes/check/${postId}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${tokenAuth}`,
+        }
+    });
+    const promisePost = fetch(url);
+    const [responseLike, responsePost] = await Promise.all([promiseLike, promisePost]);
+    const postResponse = await responsePost.json();
+    const likesResponse = await responseLike.json();
+    const post = postResponse.data;
+    const likes = likesResponse.data;
+    const likesState = likes.has_liked
+    // console.log(likesState);
     return (
-        <div className="relative min-h-screen w-full bg-background/80">
-            <div className="aurora-bg">
-                <div className="aurora__item"></div>
-                <div className="aurora__item"></div>
-                <div className="aurora__item"></div>
-                <div className="aurora__item"></div>
-            </div>
+        <div className="relative min-h-screen w-full bg-zinc-950">
             <main className="relative isolate pt-24 sm:pt-32">
+                <LikeButton postId={postId} tokenAuth={tokenAuth} userId={session?.user?.id?.toString() || ''} likesState={likesState} />
                 <div className="mx-auto max-w-3xl px-6 lg:px-8 pb-16">
                     <article className="space-y-12">
                         <header className="text-center">

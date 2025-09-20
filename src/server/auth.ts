@@ -28,6 +28,7 @@ export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
             // }
             if (user) {
                 token.tokenAuth = usuario.tokenAuth;
+                token.role = usuario.role;
             }
 
             if (account && account.provider === 'discord') {

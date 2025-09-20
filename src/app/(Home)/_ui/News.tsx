@@ -87,9 +87,8 @@ const News = () => {
                 </div>
                 <video
                     ref={videoRef}
-                    // src="https://cdn.cosmos.so/1075007b-3d56-472b-8e59-71b788887389.mp4"
                     src="https://cdn.cosmos.so/5b4ab569-c375-4f0e-bf59-61dc98375bad.mp4"
-                    className="aspect-5/2 w-full object-cover outline-1 -outline-offset-1 outline-white/10 xl:rounded-3xl mt-4 [clip-path:circle(3.5%)] relative z-0"
+                    className="aspect-square lg:aspect-5/2 w-full object-cover outline-1 -outline-offset-1 outline-white/10 xl:rounded-3xl mt-4 [clip-path:circle(3.5%)] relative z-0"
                     autoPlay
                     loop
                     muted
