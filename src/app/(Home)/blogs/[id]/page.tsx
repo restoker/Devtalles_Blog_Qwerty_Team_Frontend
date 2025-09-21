@@ -24,12 +24,12 @@ export default async function BlogPage({ params }: { params: { id: string } }) {
     const likesResponse = await responseLike.json();
     const post = postResponse.data;
     const likes = likesResponse.data;
-    const likesState = likes.has_liked
+    const likesState = likes?.has_liked
     // console.log(likesState);
     return (
         <div className="relative min-h-screen w-full bg-zinc-950">
             <main className="relative isolate pt-24 sm:pt-32">
-                <LikeButton postId={postId} tokenAuth={tokenAuth} userId={session?.user?.id?.toString() || ''} likesState={likesState} />
+                {session && <LikeButton postId={postId} tokenAuth={tokenAuth} userId={session?.user?.id?.toString() || ''} likesState={likesState} />}
                 <div className="mx-auto max-w-3xl px-6 lg:px-8 pb-16">
                     <article className="space-y-12">
                         <header className="text-center">

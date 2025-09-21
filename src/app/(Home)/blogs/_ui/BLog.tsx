@@ -42,12 +42,12 @@ const BLog = ({ post }: { post: Post }) => {
                         </Link>
                     </div>
                     <div className="group relative flex justify-center w-full flex-col items-center">
-                        <h3 className="mt-3 text-lg/6 font-semibold text-white group-hover:text-gray-100">
-                            <Link href={`/blogs/${post.id}`}>
+                        <Link href={`/blogs/${post.id}`}>
+                            <h3 className="mt-3 text-lg/6 font-semibold text-white group-hover:text-gray-100 line-clamp-1">
                                 <span className="absolute inset-0" />
                                 {post.title}
-                            </Link>
-                        </h3>
+                            </h3>
+                        </Link>
                         <p className="mt-5 line-clamp-2 text-sm/6 text-gray-400">{post.description}</p>
                     </div>
                     <div className="relative mt-8 flex items-center gap-x-4">

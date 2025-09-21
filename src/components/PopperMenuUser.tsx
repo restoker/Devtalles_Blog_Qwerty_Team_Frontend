@@ -1,13 +1,8 @@
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
 import {
-    ArrowPathIcon,
-    ChartPieIcon,
-    ChevronDownIcon,
     CursorArrowRaysIcon,
     FingerPrintIcon,
-    PhoneIcon,
     PlayCircleIcon,
-    SquaresPlusIcon,
 } from '@heroicons/react/24/outline'
 import type { Session } from 'next-auth';
 import { Avatar, AvatarFallback } from './ui/avatar';
@@ -17,7 +12,7 @@ import Link from 'next/link';
 
 const solutions = [
     { name: 'new Blog', description: 'Get a better understanding of your traffic', href: '/blogs/new', icon: CursorArrowRaysIcon },
-    { name: 'Profile', description: 'Speak directly to your customers', href: '#', icon: FingerPrintIcon },
+    // { name: 'Profile', description: 'Speak directly to your customers', href: '#', icon: FingerPrintIcon },
     { name: 'All Blogs', description: "Your customers' data will be safe and secure", href: '/blogs', icon: PlayCircleIcon },
     // { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
     // { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
@@ -30,16 +25,16 @@ const PopperMenuUser = ({ session }: { session: Session }) => {
         <>
             <Popover className="relative">
                 <PopoverButton className="inline-flex items-center text-sm/6 font-semibold rounded-full ring-0 cursor-pointer outline-0">
-                    <Avatar className="w-8 h-8 rounded-full">
+                    <Avatar className="size-8 rounded-full">
                         {session?.user.image && (
-                            <img alt="" src={session?.user?.image} className="h-8 w-8 rounded-full" />
+                            <img alt="" src={session?.user?.image} className="h-8 w-8 rounded-full object-center object-cover" />
                         )}
                         {!session?.user.image && (
                             <AvatarFallback className="bg-transparent">
                                 {/* <div className="font-bold">
                                                     {user?.user.name?.charAt(0).toUpperCase()}
                                                 </div> */}
-                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" className="h-8 w-8 rounded-full object-cover" />
+                                <img src="/img/avatar.webp" />
                             </AvatarFallback>
                         )}
                     </Avatar>

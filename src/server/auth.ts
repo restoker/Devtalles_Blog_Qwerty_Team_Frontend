@@ -54,23 +54,23 @@ export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
                 //   }
 
 
-                const existsAccount = await fetch(`${process.env.ADDRESS_SERVER}/api/auth/discord/login`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-                if (existsAccount.ok) {
-                    const existsAccountJson = await existsAccount.json();
-                    // token.isOauth = true;
-                    token.name = existsAccountJson.user.name;
-                    token.email = existsAccountJson.user.email;
-                    token.role = existsAccountJson.user.role;
-                    token.image = existsAccountJson.user.image;
-                    return token;
-                }
+                // const existsAccount = await fetch(`${process.env.ADDRESS_SERVER}/api/auth/discord/custom-user/${account.providerAccountId}`, {
+                //     method: "GET",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //     },
+                // });
+                // if (existsAccount.ok) {
+                //     const existsAccountJson = await existsAccount.json();
+                //     // token.isOauth = true;
+                //     token.name = existsAccountJson.user.name;
+                //     token.email = existsAccountJson.user.email;
+                //     token.role = existsAccountJson.user.role;
+                //     token.image = existsAccountJson.user.image;
+                //     return token;
+                // }
                 //    si no existe el usuario crear usuario en la base de datos
-                const newAccount = await fetch(`${process.env.ADDRESS_SERVER}/api/auth/discord/login`, {
+                const newAccount = await fetch(`${process.env.ADDRESS_SERVER}/api/auth/discord/custom-login`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -81,19 +81,22 @@ export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
                     }),
                 });
                 if (!newAccount.ok) return token;
-                const existsAccountJson = await newAccount.json();
+                const newAccountJson = await newAccount.json();
+                // console.log({ newAccountJson });
                 // token.isOauth = true;
-                token.name = existsAccountJson.user.name;
-                token.email = existsAccountJson.user.email;
-                token.role = existsAccountJson.user.role;
-                token.image = existsAccountJson.user.picture;
+                if (!newAccountJson.ok) return token;
+                token.name = newAccountJson.data.user.name;
+                token.email = newAccountJson.data.user.email;
+                token.role = newAccountJson.data.user.role;
+                token.image = newAccountJson.data.user.image;
+                token.tokenAuth = newAccountJson.data.access_token;
                 return token;
             }
 
 
             if (!token.sub) return token;
             // get user by id
-            const existUser = await fetch(`${process.env.ADDRESS_SERVER}/api/user/${token.sub}`, {
+            const existUser = await fetch(`${process.env.ADDRESS_SERVER}/api/users/${token.sub}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

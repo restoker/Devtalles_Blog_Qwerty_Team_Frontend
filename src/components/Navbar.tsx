@@ -5,25 +5,26 @@ import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-import MobilNavegation from './MobilNavegation';
-import { Session } from 'next-auth';
+import { signOut, useSession } from 'next-auth/react';
+// import { Session } from 'next-auth';
 import PopperMenuUser from './PopperMenuUser';
-const navigation = [
-    { name: 'Blogs', href: '/blogs' },
-    { name: "FAQs", href: '/faqs' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
-    { name: 'Dashboard', href: '/admin' },
-]
+
 const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const path = usePathname();
     // const [session, setSession] = useState<Session | null>(null);
     const { data: sesion } = useSession();
+    // console.log(sesion);
     // useEffect(() => {
     //     setSession(sesion);
     // }, [sesion]);
+    const navigation = [
+        { name: 'Blogs', href: '/blogs' },
+        { name: "FAQs", href: '/faqs' },
+        { name: 'About', href: '/about' },
+        { name: 'Contact', href: '/contact' },
+        ...(sesion?.user.role === 'admin' ? [{ name: 'Dashboard', href: '/admin' }] : [])
+    ]
 
     return (
         <>
@@ -80,15 +81,9 @@ const Navbar = () => {
                     <div className="fixed inset-0 z-50" />
                     <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900/5 backdrop-blur-lg p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-100/10">
                         <div className="flex items-center justify-between">
-                            <a href="#" className="-m-1.5 p-1.5">
-                                <span className="sr-only">Your Company</span>
-                                {/* <img
-                                    alt=""
-                                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                                    className="h-8 w-auto"
-                                /> */}
+                            <Link href="/" className="-m-1.5 p-1.5">
                                 <h1 className='font-bold text-2xl text-white'>{"{Dev/Blog}"}</h1>
-                            </a>
+                            </Link>
                             <button
                                 type="button"
                                 onClick={() => setMobileMenuOpen(false)}
@@ -112,20 +107,31 @@ const Navbar = () => {
                                     ))}
                                 </div>
                                 <div className="py-6">
-
-                                    <Link
-                                        href="/login"
-                                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-white/5"
-                                    >
-                                        Log in
-                                    </Link>
-
-                                    {/* <Link
-                                        href="/register"
-                                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-white/5"
-                                    >
-                                        Register
-                                    </Link> */}
+                                    {
+                                        sesion?.user
+                                            ?
+                                            <div
+                                                className='flex items-center w-full rounded-lg py-2 text-base/7 font-semibold text-gray-200 hover:text-white hover:bg-white/5 justify-center cursor-pointer'
+                                                onClick={() => {
+                                                    signOut();
+                                                    setMobileMenuOpen(false);
+                                                }}
+                                            >
+                                                <img
+                                                    src={sesion.user.image || '/img/avatar.webp'}
+                                                    alt=""
+                                                    className='size-10 rounded-full overflow-hidden'
+                                                />
+                                                <p className='ml-4'>Logout</p>
+                                            </div>
+                                            :
+                                            <Link
+                                                href="/login"
+                                                className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-white/5"
+                                            >
+                                                Log in
+                                            </Link>
+                                    }
                                 </div>
                             </div>
                         </div>

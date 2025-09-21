@@ -1,6 +1,7 @@
 import z from "zod";
 
 export const newBlogSchema = z.object({
+    id: z.string().optional(),
     tokenAuth: z.optional(z.string()),
     title: z.string().min(3, { message: "The minimum length is 1" }),
     resume: z.string().min(3, { message: "The minimum length is 1" }),

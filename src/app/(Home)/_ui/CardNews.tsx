@@ -290,13 +290,13 @@ const CardNews = ({ cardInfo }: { cardInfo: CardInfo[] }) => {
 
     return (
         <>
-            <img ref={etiquetaRef} className='absolute z-30 bottom-32 sm:bottom-52 lg:bottom-32 size-24 object-contain rounded-lg left-1/3' src={etiqueta} />
+            <img ref={etiquetaRef} className='etiqueta absolute z-30 bottom-32 sm:bottom-52 lg:bottom-32 size-24 object-contain rounded-lg left-1/3' src={etiqueta} />
 
-            <div ref={titleRef} className="flex justify-between items-center text-center mt-5 flex-col">
+            <div ref={titleRef} className="icono flex justify-between items-center text-center mt-5 flex-col">
                 <h2 className="text-4xl font-semibold tracking-tight text-pretty text-white sm:text-3xl">{title}</h2>
                 <div data-draw-line='' className="flex flex-col items-center gap-1">
-                    <p className="text-white/50 flex items-center gap-1 group cursor-pointer mt-5">
-                        View new
+                    <p className="text-white/80 flex items-center gap-1 group cursor-pointer mt-5 italic">
+                        View Blog
                         {/* right arrow */}
                         {/* <ChevronRightIcon className="w-6 h-6 group-hover:translate-x-1 transition-all duration-300" /> */}
                     </p>

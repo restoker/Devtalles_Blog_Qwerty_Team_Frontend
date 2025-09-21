@@ -33,6 +33,9 @@ const News = () => {
     ];
 
     useGSAP(() => {
+        let cards = gsap.utils.toArray(".card") as HTMLDivElement[];
+        let etiqueta = gsap.utils.toArray(".etiqueta") as HTMLDivElement[];
+        let icono = gsap.utils.toArray(".icono") as HTMLDivElement[];
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: triggerRef.current,
@@ -55,10 +58,23 @@ const News = () => {
                     clipPath: 'circle(100%)',
                     delay: 0.8,
                 }, '<')
-                .from(cardsRef.current, {
+                .from(cards, {
+                    opacity: 0,
+                    delay: 0.8,
+                    stagger: 0.2,
+                }, '<')
+                .from(etiqueta, {
                     opacity: 0,
                     delay: 0.8,
                 }, '<')
+                .from(icono, {
+                    opacity: 0,
+                    delay: 0.8,
+                }, '<')
+            // .from(cardsRef.current, {
+            //     opacity: 0,
+            //     delay: 0.8,
+            // }, '<')
         };
 
         const cleanupAnimations = () => {

@@ -19,11 +19,12 @@ import clsx from 'clsx';
 import { toast } from 'sonner';
 import type { Session } from 'next-auth';
 import { signOut } from 'next-auth/react';
+import { getBlogAction } from '@/server/actions/gt-blog-action';
 
 
 const FormNewBlog = ({ categories, tags, session }: { categories: CategoriesBlog[]; tags: TagsBlog[]; session: Session }) => {
     const router = useRouter();
-
+    const [chargetBlog, setChargetBlog] = useState(false);
     const [coverUploading, setCoverUploading] = useState(false);
     const params = useSearchParams();
     const editMode = params.get('id');
@@ -82,10 +83,31 @@ const FormNewBlog = ({ categories, tags, session }: { categories: CategoriesBlog
     // console.log(categoriesWatch);
     // console.log(form.formState.errors);
     // console.log(form.watch('cover'));
-    function checkBlog() {
-        throw new Error('Function not implemented.');
+    async function checkBlog() {
+        // console.log(editMode);
+        if (editMode) {
+            setChargetBlog(true);
+            const { ok, data: blog, msg } = await getBlogAction(editMode);
+            setChargetBlog(false);
+            if (!ok) {
+                toast.error(`${msg}`);
+                router.push('/dashboard/products');
+                return;
+            }
+            if (blog) {
+                // console.log(blog);
+                form.setValue('title', blog.title);
+                form.setValue('resume', blog.description);
+                form.setValue('content', blog.content);
+                form.setValue('cover', blog.images[0]);
+                form.setValue('tags', blog.tags.map((tag: TagsBlog) => tag.name));
+                form.setValue('categories', blog.category.id);
+                form.setValue('id', editMode);
+            }
+        }
     }
-
+    // console.log(form.getValues());
+    // console.log(form.watch('tags'));
 
     useEffect(() => {
         if (!editMode) return;
@@ -99,12 +121,19 @@ const FormNewBlog = ({ categories, tags, session }: { categories: CategoriesBlog
     function onSubmit(values: z.infer<typeof newBlogSchema>) {
         if (!session.user.tokenAuth) {
             return toast.error("You need to be logged in to create a blog");
+            // TODO: redirect to login
         }
         const dataToSend = {
             ...values,
             tokenAuth: session.user.tokenAuth,
         }
         execute(dataToSend);
+    }
+
+    if (chargetBlog) {
+        return (
+            <p className="text-white text-center text-2xl">Charging the Blog 😝... </p>
+        )
     }
 
     return (
@@ -258,6 +287,7 @@ const FormNewBlog = ({ categories, tags, session }: { categories: CategoriesBlog
                                                             {...field}
                                                             options={tags.map((tag) => ({ label: tag.name, value: tag.id.toString() }))}
                                                             value={field.value}
+                                                            defaultValue={field.value}
                                                             onValueChange={field.onChange}
                                                             placeholder="Full width multi-select"
                                                             className="w-full"

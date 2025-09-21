@@ -1,54 +1,13 @@
-import { Post } from '@/interfaces'
+import { CategoriesBlog, Post } from '@/interfaces'
 import { auth } from '@/server/auth'
 import {
     Disclosure,
     Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems,
+    Select,
 } from '@headlessui/react'
-import { ChevronDownIcon, PlusIcon } from '@heroicons/react/24/outline'
+import { PlusIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import BLog from './_ui/BLog'
-
-const filters = {
-    price: [
-        { value: '0', label: '$0 - $25', checked: false },
-        { value: '25', label: '$25 - $50', checked: false },
-        { value: '50', label: '$50 - $75', checked: false },
-        { value: '75', label: '$75+', checked: false },
-    ],
-    color: [
-        { value: 'white', label: 'White', checked: false },
-        { value: 'beige', label: 'Beige', checked: false },
-        { value: 'blue', label: 'Blue', checked: true },
-        { value: 'brown', label: 'Brown', checked: false },
-        { value: 'green', label: 'Green', checked: false },
-        { value: 'purple', label: 'Purple', checked: false },
-    ],
-    size: [
-        { value: 'xs', label: 'XS', checked: false },
-        { value: 's', label: 'S', checked: true },
-        { value: 'm', label: 'M', checked: false },
-        { value: 'l', label: 'L', checked: false },
-        { value: 'xl', label: 'XL', checked: false },
-        { value: '2xl', label: '2XL', checked: false },
-    ],
-    category: [
-        { value: 'all-new-arrivals', label: 'All New Arrivals', checked: false },
-        { value: 'tees', label: 'Tees', checked: false },
-        { value: 'objects', label: 'Objects', checked: false },
-        { value: 'sweatshirts', label: 'Sweatshirts', checked: false },
-        { value: 'pants-and-shorts', label: 'Pants & Shorts', checked: false },
-    ],
-}
-const sortOptions = [
-    { name: 'Most Popular', href: '#', current: true },
-    { name: 'Best Rating', href: '#', current: false },
-    { name: 'Newest', href: '#', current: false },
-    { name: 'Price: Low to High', href: '#', current: false },
-    { name: 'Price: High to Low', href: '#', current: false },
-]
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -56,15 +15,31 @@ function classNames(...classes: string[]) {
 export default async function Blogs() {
     const session = await auth();
     // console.log(session);
-    const blogs = await fetch(`${process.env.ADDRESS_SERVER}/api/posts`, {
+    const categoriesPromise = await fetch(`${process.env.ADDRESS_SERVER}/api/categories`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${session?.user?.tokenAuth}`,
         },
     });
-    const blogsData = await blogs.json();
-    const postsServer = blogsData.data.posts as Post[];
+
+    const blogsPromise = await fetch(`${process.env.ADDRESS_SERVER}/api/posts`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session?.user?.tokenAuth}`,
+        },
+    });
+
+    const [categoriesData, blogsData] = await Promise.all([
+        categoriesPromise,
+        blogsPromise,
+    ]);
+
+    const blogs = await blogsData.json();
+    const categories = await categoriesData.json();
+    const postsServer = blogs.data.posts as Post[];
+    const categoriesServer = categories.data.categories as CategoriesBlog[];
     // const postsServer = [1];
     return (
         <>
@@ -91,231 +66,34 @@ export default async function Blogs() {
                         aria-labelledby="filter-heading"
                         className="grid items-center border-t border-b border-zinc-50/30"
                     >
-                        <h2 id="filter-heading" className="sr-only">
-                            Filters
-                        </h2>
-                        <div className="relative col-start-1 row-start-1 py-4">
-                            <div className="mx-auto flex max-w-7xl divide-x divide-gray-100 px-4 text-sm sm:px-6 lg:px-8">
 
-                            </div>
-                        </div>
-                        {/* <DisclosurePanel className="border-t border-gray-200 py-10 bg-zinc-900">
-                            <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
-                                <div className="grid auto-rows-min grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-6">
-                                    <fieldset>
-                                        <legend className="block font-medium">Price</legend>
-                                        <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
-                                            {filters.price.map((option, optionIdx) => (
-                                                <div key={option.value} className="flex gap-3">
-                                                    <div className="flex h-5 shrink-0 items-center">
-                                                        <div className="group grid size-4 grid-cols-1">
-                                                            <input
-                                                                defaultValue={option.value}
-                                                                defaultChecked={option.checked}
-                                                                id={`price-${optionIdx}`}
-                                                                name="price[]"
-                                                                type="checkbox"
-                                                                className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-purple-600 checked:bg-purple-600 indeterminate:border-purple-600 indeterminate:bg-purple-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                                                            />
-                                                            <svg
-                                                                fill="none"
-                                                                viewBox="0 0 14 14"
-                                                                className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25"
-                                                            >
-                                                                <path
-                                                                    d="M3 8L6 11L11 3.5"
-                                                                    strokeWidth={2}
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    className="opacity-0 group-has-checked:opacity-100"
-                                                                />
-                                                                <path
-                                                                    d="M3 7H11"
-                                                                    strokeWidth={2}
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    className="opacity-0 group-has-indeterminate:opacity-100"
-                                                                />
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                    <label htmlFor={`price-${optionIdx}`} className="text-base text-gray-200 sm:text-sm">
-                                                        {option.label}
-                                                    </label>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <legend className="block font-medium">Color</legend>
-                                        <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
-                                            {filters.color.map((option, optionIdx) => (
-                                                <div key={option.value} className="flex gap-3">
-                                                    <div className="flex h-5 shrink-0 items-center">
-                                                        <div className="group grid size-4 grid-cols-1">
-                                                            <input
-                                                                defaultValue={option.value}
-                                                                defaultChecked={option.checked}
-                                                                id={`color-${optionIdx}`}
-                                                                name="color[]"
-                                                                type="checkbox"
-                                                                className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-purple-600 checked:bg-purple-600 indeterminate:border-purple-600 indeterminate:bg-purple-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                                                            />
-                                                            <svg
-                                                                fill="none"
-                                                                viewBox="0 0 14 14"
-                                                                className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25"
-                                                            >
-                                                                <path
-                                                                    d="M3 8L6 11L11 3.5"
-                                                                    strokeWidth={2}
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    className="opacity-0 group-has-checked:opacity-100"
-                                                                />
-                                                                <path
-                                                                    d="M3 7H11"
-                                                                    strokeWidth={2}
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    className="opacity-0 group-has-indeterminate:opacity-100"
-                                                                />
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                    <label htmlFor={`color-${optionIdx}`} className="text-base text-gray-200 sm:text-sm">
-                                                        {option.label}
-                                                    </label>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </fieldset>
-                                </div>
-                                <div className="grid auto-rows-min grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-6">
-                                    <fieldset>
-                                        <legend className="block font-medium">Size</legend>
-                                        <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
-                                            {filters.size.map((option, optionIdx) => (
-                                                <div key={option.value} className="flex gap-3">
-                                                    <div className="flex h-5 shrink-0 items-center">
-                                                        <div className="group grid size-4 grid-cols-1">
-                                                            <input
-                                                                defaultValue={option.value}
-                                                                defaultChecked={option.checked}
-                                                                id={`size-${optionIdx}`}
-                                                                name="size[]"
-                                                                type="checkbox"
-                                                                className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-purple-600 checked:bg-purple-600 indeterminate:border-purple-600 indeterminate:bg-purple-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                                                            />
-                                                            <svg
-                                                                fill="none"
-                                                                viewBox="0 0 14 14"
-                                                                className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25"
-                                                            >
-                                                                <path
-                                                                    d="M3 8L6 11L11 3.5"
-                                                                    strokeWidth={2}
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    className="opacity-0 group-has-checked:opacity-100"
-                                                                />
-                                                                <path
-                                                                    d="M3 7H11"
-                                                                    strokeWidth={2}
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    className="opacity-0 group-has-indeterminate:opacity-100"
-                                                                />
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                    <label htmlFor={`size-${optionIdx}`} className="text-base text-gray-200 sm:text-sm">
-                                                        {option.label}
-                                                    </label>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <legend className="block font-medium">Category</legend>
-                                        <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
-                                            {filters.category.map((option, optionIdx) => (
-                                                <div key={option.value} className="flex gap-3">
-                                                    <div className="flex h-5 shrink-0 items-center">
-                                                        <div className="group grid size-4 grid-cols-1">
-                                                            <input
-                                                                defaultValue={option.value}
-                                                                defaultChecked={option.checked}
-                                                                id={`category-${optionIdx}`}
-                                                                name="category[]"
-                                                                type="checkbox"
-                                                                className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-purple-600 checked:bg-purple-600 indeterminate:border-purple-600 indeterminate:bg-purple-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                                                            />
-                                                            <svg
-                                                                fill="none"
-                                                                viewBox="0 0 14 14"
-                                                                className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25"
-                                                            >
-                                                                <path
-                                                                    d="M3 8L6 11L11 3.5"
-                                                                    strokeWidth={2}
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    className="opacity-0 group-has-checked:opacity-100"
-                                                                />
-                                                                <path
-                                                                    d="M3 7H11"
-                                                                    strokeWidth={2}
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    className="opacity-0 group-has-indeterminate:opacity-100"
-                                                                />
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                    <label htmlFor={`category-${optionIdx}`} className="text-base text-gray-200 sm:text-sm">
-                                                        {option.label}
-                                                    </label>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </fieldset>
-                                </div>
-                            </div>
-                        </DisclosurePanel> */}
                         {/* menu sort */}
+                        <h2 id="filter-heading" className="text-xl font-medium tracking-tight text-zinc-50 absolute self-center left-1/2 translate-x-3/4">
+                            Select Category:
+                        </h2>
                         <div className="col-start-1 row-start-1 py-4">
                             <div className="mx-auto flex max-w-7xl justify-end px-4 sm:px-6 lg:px-8">
                                 <Menu as="div" className="relative inline-block">
-                                    <div className="flex">
-                                        <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-100 hover:text-purple-600 ring-0 outline-none cursor-pointer">
-                                            Sort
-                                            <ChevronDownIcon
-                                                aria-hidden="true"
-                                                className="-mr-1 ml-1 size-5 shrink-0 text-gray-100 group-hover:text-purple-600"
-                                            />
-                                        </MenuButton>
-                                    </div>
-                                    <MenuItems
-                                        transition
-                                        className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white ring-1 shadow-2xl ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                                    <Select
+                                        name="status" aria-label="Project status"
+                                        className="absolute -top-3.5 right-0 z-10 w-40 origin-top-right rounded-md  ring-1 shadow-2xl ring-white/50 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in px-2 py-1"
                                     >
-                                        <div className="py-1">
-                                            {sortOptions.map((option) => (
-                                                <MenuItem key={option.name}>
-                                                    <a
-                                                        href={option.href}
-                                                        className={classNames(
-                                                            option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                                                            'block px-4 py-2 text-sm data-focus:bg-gray-100 data-focus:outline-hidden',
-                                                        )}
-                                                    >
-                                                        {option.name}
-                                                    </a>
-                                                </MenuItem>
-                                            ))}
-                                        </div>
-                                    </MenuItems>
+                                        {/* <div className="py-1"> */}
+                                        {categoriesServer.map((option) => (
+                                            // <option >
+                                            <option
+                                                key={option.name}
+                                                value={option.name}
+                                                className={classNames(
+                                                    'block px-4 py-2 text-sm data-focus:bg-gray-100 data-focus:outline-hidden text-gray-500 hover:text-gray-900',
+                                                )}
+                                            >
+                                                {option.name}
+                                            </option>
+                                            // </option>
+                                        ))}
+                                        {/* </div> */}
+                                    </Select>
                                 </Menu>
                             </div>
                         </div>
@@ -332,35 +110,11 @@ export default async function Blogs() {
                                     ?
                                     <div className='w-dvw max-w-xl lg:max-w-6xl mx-auto'>
                                         <div className="text-center flex items-center justify-center flex-col">
-                                            {/* <svg
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                aria-hidden="true"
-                                                className="mx-auto size-12 text-gray-500"
-                                            >
-                                                <path
-                                                    d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
-                                                    strokeWidth={2}
-                                                    vectorEffect="non-scaling-stroke"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                />
-                                            </svg> */}
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="mx-auto size-12 text-gray-500">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
                                             </svg>
                                             <h3 className="mt-2 text-sm font-semibold text-white">Dont have any blog</h3>
                                             <p className="mt-1 text-sm text-gray-400">Get started by creating a new blog.</p>
-                                            {/* <div className="mt-6">
-                                                <button
-                                                    type="button"
-                                                    className="inline-flex items-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                                                >
-                                                    <PlusIcon aria-hidden="true" className="mr-1.5 -ml-0.5 size-5" />
-                                                    New Blog
-                                                </button>
-                                            </div> */}
                                         </div>
                                     </div>
                                     :
