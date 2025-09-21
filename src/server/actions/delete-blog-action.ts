@@ -21,9 +21,7 @@ export const deleteBlogAction = actionClient
                 },
             });
 
-            const data = await response.json();
-
-            if (!data.ok) {
+            if (!response.ok) {
                 return {
                     ok: false,
                     msg: 'Error when deleting blog'
@@ -36,6 +34,7 @@ export const deleteBlogAction = actionClient
                 msg: 'Blog deleted successfully'
             }
         } catch (e) {
+            console.log(e);
             return {
                 ok: false,
                 msg: 'Error on Server when deleting blog'

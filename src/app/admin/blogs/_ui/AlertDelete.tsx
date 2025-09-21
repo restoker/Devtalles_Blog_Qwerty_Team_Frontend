@@ -46,9 +46,18 @@ const AlertDelete = () => {
                 }
             }
         },
-        onExecute: () => {
-            toast.loading("Deleting Blog");
-        }
+        // onExecute: () => {
+        //     toast.loading("Deleting Blog", {
+        //         duration: 2000,
+        //         classNames: {
+        //             toast: 'text-white bg-lime-600',
+        //             closeButton: 'bg-lime-600 text-red-700'
+        //         },
+        //         closeButton: true,
+        //         position: 'top-right',
+        //         // icon: <Circle className='animate-bounce' />,
+        //     });
+        // }
     });
 
     const deleteProduct = () => {

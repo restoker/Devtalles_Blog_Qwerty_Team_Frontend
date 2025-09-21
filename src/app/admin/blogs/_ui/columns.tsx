@@ -3,26 +3,16 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { modalStore } from "@/store/alertStore";
 import Link from "next/link";
-// import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 type PostColumn = {
     title: string;
-    // price: number;
-
-    // description: string;
     image: string;
     id: number;
     date: string;
-    // created: string | null;
 }
 
 export const columns: ColumnDef<PostColumn>[] = [
@@ -62,17 +52,14 @@ export const columns: ColumnDef<PostColumn>[] = [
             const openModal = modalStore(state => state.openModal);
 
             return (
-                <DropdownMenu>
+
+                <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
                         <Button variant={"ghost"} className="h-8 w-8 bg-transparent" size={'icon'}>
                             <MoreHorizontal className="h-4 w-4 cursor-pointer" />
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>Profile</DropdownMenuItem>
-                        <DropdownMenuItem>Billing</DropdownMenuItem> */}
                         <DropdownMenuItem
                             className="dark:focus:bg-purple-500 focus:bg-amber-500/50 cursor-pointer"
                         >
