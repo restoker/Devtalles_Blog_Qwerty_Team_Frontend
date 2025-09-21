@@ -4,18 +4,19 @@ import { useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from '@headlessui/react'
 import {
     ArrowsRightLeftIcon,
-    CalendarIcon,
+    // CalendarIcon,
     DocumentDuplicateIcon,
-    FolderIcon,
+    // FolderIcon,
     UsersIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline'
+import { usePathname } from 'next/navigation'
 
 const navigation = [
     { name: 'Users', href: '/admin', icon: UsersIcon, current: false },
     { name: 'Posts', href: '/admin/blogs', icon: DocumentDuplicateIcon, current: false },
-    { name: 'Categories', href: '#', icon: FolderIcon, current: false },
-    { name: 'Tags', href: '#', icon: CalendarIcon, current: false },
+    // { name: 'Categories', href: '#', icon: FolderIcon, current: false },
+    // { name: 'Tags', href: '#', icon: CalendarIcon, current: false },
 ]
 
 function classNames(...classes: string[]) {
@@ -24,6 +25,9 @@ function classNames(...classes: string[]) {
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const pathname = usePathname();
+
+    console.log(pathname);
     return (
         <div className='mt-16'>
             <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
@@ -60,8 +64,8 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                                                     <a
                                                         href={item.href}
                                                         className={classNames(
-                                                            item.current
-                                                                ? 'bg-white/5 text-white'
+                                                            item.href === pathname
+                                                                ? 'bg-purple-600 text-white'
                                                                 : 'text-gray-400 hover:bg-white/5 hover:text-white',
                                                             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                                                         )}
@@ -69,7 +73,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                                                         <item.icon
                                                             aria-hidden="true"
                                                             className={classNames(
-                                                                item.current ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                                                                item.href === pathname ? 'text-white' : 'text-gray-400 group-hover:text-white',
                                                                 'size-6 shrink-0',
                                                             )}
                                                         />
@@ -101,14 +105,14 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                                             <a
                                                 href={item.href}
                                                 className={classNames(
-                                                    item.current ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white',
+                                                    item.href === pathname ? 'bg-purple-600 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white',
                                                     'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
                                                 )}
                                             >
                                                 <item.icon
                                                     aria-hidden="true"
                                                     className={classNames(
-                                                        item.current ? 'text-white' : 'text-gray-400 group-hover:text-white',
+                                                        item.href === pathname ? 'text-white' : 'text-gray-400 group-hover:text-white',
                                                         'size-6 shrink-0',
                                                     )}
                                                 />

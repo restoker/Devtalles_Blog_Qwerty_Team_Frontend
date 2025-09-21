@@ -18,6 +18,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 
     const [sort, setSort] = useState<SortingState>([]);
     const [columnfilters, setColumnfilters] = useState<ColumnFiltersState>([]);
+    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 })
 
     const table = useReactTable({
         data,
@@ -30,7 +31,9 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         state: {
             sorting: sort,
             columnFilters: columnfilters,
-        }
+            pagination,
+        },
+        onPaginationChange: setPagination,
     });
 
     return (
@@ -45,7 +48,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 
                     <CardContent>
                         <div>
-                            <div className="pb-4">
+                            <div className="pb-2">
                                 <Input
                                     className="w-60"
                                     placeholder="Filter blogs"
@@ -53,7 +56,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                                     onChange={(event) => table.getColumn('title')?.setFilterValue(event.target.value)}
                                 />
                             </div>
-                            <Table>
+                            <Table className="">
                                 <TableHeader>
                                     {table.getHeaderGroups().map((headerGroup) => (
                                         <TableRow key={headerGroup.id}>
@@ -96,7 +99,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                                 </TableBody>
                             </Table>
                             {/* botones para next and previous page */}
-                            <div className="flex items-center justify-end gap-4">
+                            <div className="flex items-center justify-end gap-4 mt-4">
                                 <Button
                                     variant={'outline'}
                                     disabled={!table.getCanPreviousPage()}
