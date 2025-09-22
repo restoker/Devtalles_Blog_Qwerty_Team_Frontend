@@ -1,22 +1,11 @@
-'use client'
-import Link from 'next/link'
-import React from 'react'
-// import { formatRelative } from 'date-fns'
-// import { subDays } from 'date-fns'
-import { Post } from '@/interfaces'
+'use client';
 
-// const options = ;
+import Link from 'next/link';
+import React from 'react';
+import { Post } from '@/interfaces';
+
 
 const BLog = ({ post }: { post: Post }) => {
-
-    const converDate = (date: string) => {
-        return new Date(date).toLocaleDateString("pe-PE", {
-            weekday: "short",
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-        });
-    }
 
     return (
         <>
@@ -31,9 +20,16 @@ const BLog = ({ post }: { post: Post }) => {
                 </Link>
                 <div className="w-full px-2 pb-2">
                     <div className="mt-8 flex items-center gap-x-4 text-xs">
-                        <time dateTime={post.created_at} className="text-gray-400">
-                            {converDate(post.created_at)}
-                        </time>
+                        {/* <time dateTime={converDate(post.created_at)} className="text-gray-400"> */}
+                        <span className="text-gray-400">
+                            {new Date(post.created_at).toLocaleDateString("en-US", {
+                                weekday: "short",
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                            })}
+                        </span>
+                        {/* </time> */}
                         <Link
                             href={`/blogs/${post.id}`}
                             className="relative z-10 rounded-full px-3 py-1.5 font-medium bg-gray-50/5 text-white hover:bg-gray-100/20"

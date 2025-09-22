@@ -1,15 +1,11 @@
 import Image from 'next/image';
 import Comments from './_ui/Comments';
-// import { Heart } from 'lucide-react';
-// import { HeartIcon } from '@heroicons/react/24/outline';
 import LikeButton from './_ui/LikeButton';
 import { auth } from '@/server/auth';
-// import { redirect } from 'next/navigation';
 
 export default async function BlogPage({ params }: { params: { id: string } }) {
     const { id: postId } = await params;
     const session = await auth();
-    // console.log(session);
     const tokenAuth = session?.user?.tokenAuth || '';
     const url = `${process.env.ADDRESS_SERVER}/api/posts/${postId}`;
     const promiseLike = fetch(`${process.env.ADDRESS_SERVER}/api/likes/check/${postId}`, {
@@ -25,7 +21,6 @@ export default async function BlogPage({ params }: { params: { id: string } }) {
     const post = postResponse.data;
     const likes = likesResponse.data;
     const likesState = likes?.has_liked
-    // console.log(likesState);
     return (
         <div className="relative min-h-screen w-full bg-zinc-950">
             <main className="relative isolate pt-24 sm:pt-32">
@@ -59,24 +54,13 @@ export default async function BlogPage({ params }: { params: { id: string } }) {
                                 </div>
                             </div>
                             <p className="mt-4 text-xs text-muted-foreground">
-                                {new Date(post.created_at).toLocaleDateString('es-PE', {
+                                {new Date(post.created_at).toLocaleDateString('en-US', {
                                     year: 'numeric',
                                     month: 'long',
                                     day: 'numeric',
                                 })}
                             </p>
                         </header>
-
-                        {/* <figure>
-                            <Image
-                                className="aspect-square w-full rounded-2xl object-cover"
-                                src="/img/img6.webp"
-                                alt="Diagrama comparando bases de datos"
-                                width={600}
-                                height={600}
-                                data-ai-hint="database server diagram"
-                            />
-                        </figure> */}
 
                         <div className="prose prose-invert lg:prose-xl max-w-none text-muted-foreground prose-headings:text-foreground prose-strong:text-foreground/90 prose-a:text-primary hover:prose-a:text-primary/80"
                             dangerouslySetInnerHTML={{ __html: post.content }}

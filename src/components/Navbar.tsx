@@ -1,23 +1,18 @@
 'use client';
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
-// import { Session } from 'next-auth';
 import PopperMenuUser from './PopperMenuUser';
 
 const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const path = usePathname();
-    // const [session, setSession] = useState<Session | null>(null);
     const { data: sesion } = useSession();
-    // console.log(sesion);
-    // useEffect(() => {
-    //     setSession(sesion);
-    // }, [sesion]);
+
     const navigation = [
         { name: 'Blogs', href: '/blogs' },
         { name: "FAQs", href: '/faqs' },
@@ -33,12 +28,6 @@ const Navbar = () => {
                     <div className='flex items-center justify-between'>
                         <div className="flex lg:flex-1">
                             <Link href="/" className="-m-1.5 p-1.5">
-                                <span className="sr-only">Your Company</span>
-                                {/* <img
-                                    alt=""
-                                    src=""
-                                    className="h-8 w-auto"
-                                /> */}
                                 <h1 className='font-bold text-2xl text-white'>{"{Dev/Blog}"}</h1>
                             </Link>
                         </div>
