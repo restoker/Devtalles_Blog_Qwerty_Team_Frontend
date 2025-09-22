@@ -43,8 +43,6 @@ export default async function AdminBlogsPage() {
     return (
         <AdminLayout>
             <div className="h-dvh w-full">
-                {/* <h1 className="text-white text-3xl py-5">Blogs</h1> */}
-
                 <DataTable columns={columns} data={dataTable} />
             </div>
         </AdminLayout>
