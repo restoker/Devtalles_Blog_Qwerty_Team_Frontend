@@ -352,16 +352,22 @@ const FormNewBlog = ({ categories, tags, session }: { categories: CategoriesBlog
                         </div>
                     </div>
                     <div className="mt-6 flex items-center justify-end gap-x-6">
-                        <button type="button" className="text-sm/6 font-semibold text-white">
+                        <button
+                            onClick={() => {
+                                router.back()
+                            }}
+                            type="button"
+                            className="text-sm/6 font-semibold text-white"
+                        >
                             Cancel
                         </button>
                         <button
-                            disabled={status === 'executing' || Object.keys(form.formState.errors).length > 0}
+                            disabled={status === 'executing' || !form.formState.isDirty || !form.formState.isValid}
                             type="submit"
                             className={clsx(
                                 "rounded-md bg-purple-600 px-3 py-2 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 cursor-pointer",
                                 status === 'executing' || Object.keys(form.formState.errors).length > 0 ? 'opacity-50 bg-gray-500 cursor-not-allowed' : 'opacity-100',
-                                !form.formState.isDirty ? 'opacity-50 bg-gray-500 cursor-not-allowed' : 'opacity-100',
+                                !form.formState.isDirty || !form.formState.isValid ? 'opacity-50 bg-gray-500 cursor-not-allowed' : 'opacity-100',
                             )}
                         >
                             Save
