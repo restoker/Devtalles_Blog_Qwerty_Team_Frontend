@@ -70,10 +70,6 @@ El frontend utiliza estas variables para hacer peticiones HTTP (fetch, axios, et
 
 # 📝 Frontend de DevTallesBlog  
 
-
-
-# 📝 Frontend de DevTallesBlog  
-
 ## 🧩 ¿Cómo funciona este blog?
 
 Este proyecto es un blog moderno construido con Next.js, TypeScript y Tailwind CSS. Permite publicar, leer y administrar artículos sobre desarrollo de software, tecnología y comunidad.
