@@ -9,7 +9,6 @@ export const socialDiscordLoginAction = actionClient
         type: z.string(),
     }))
     .action(async ({ parsedInput: { type }, ctx: { } }) => {
-        // console.log(type);
         const url = process.env.ADDRESS_SERVER;
         try {
             const response = await fetch(`${url}/api/auth/discord/login`, {
@@ -27,12 +26,11 @@ export const socialDiscordLoginAction = actionClient
                     'Content-Type': 'application/json'
                 },
             });
-            // console.log(urlCallback);
             if (responseCallback !== 200) return {
                 ok: false,
                 msg: 'Server error 😢'
             }
-            console.log({ urlCallback });
+            // console.log({ urlCallback });
 
 
             // if (!data.ok) {
@@ -47,7 +45,7 @@ export const socialDiscordLoginAction = actionClient
                 msg: 'User registered successfully 😊'
             }
         } catch (e) {
-            console.log(e);
+            // console.log(e);
             return {
                 ok: false,
                 msg: 'Server error 😢'

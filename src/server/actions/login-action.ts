@@ -19,8 +19,6 @@ export const loginWithEmailAndPasswordAction = actionClient
                 body: JSON.stringify({ email: sanitizedEmail, password })
             });
             const data = await user.json();
-            // console.log(data);
-            // console.log(data.hasOwnProperty("ok"));
             if (!data.ok) {
                 return {
                     ok: false,
@@ -32,18 +30,12 @@ export const loginWithEmailAndPasswordAction = actionClient
                 ...{ email, password },
                 redirect: false
             })
-            // console.log(usuario);
-            // const usuario = await signIn('credentials', {
-            //     ...{ email, password },
-            //     redirect: false
-            // })
-
             return {
                 ok: true,
                 msg: 'Wellcome back',
             }
         } catch (e) {
-            console.log(e as CredentialsSignin);
+            // console.log(e as CredentialsSignin);
             return {
                 ok: false,
                 msg: 'Error al iniciar sesión'

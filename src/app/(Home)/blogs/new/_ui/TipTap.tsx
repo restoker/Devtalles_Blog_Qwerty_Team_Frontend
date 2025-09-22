@@ -195,9 +195,7 @@ const TipTap = ({ value, setValue }: { value: string, setValue: UseFormSetValue<
                         </Toggle>
                     </div>
                     : null}
-                <EditorContent className='bg-zinc-800' editor={editor} />
-                {/* <FloatingMenu editor={editor}>This is the floating menu</FloatingMenu>
-            <BubbleMenu editor={null}>This is the bubble menu</BubbleMenu> */}
+                <EditorContent className='bg-zinc-800 flex flex-1 flex-col' editor={editor} />
             </div>
         </>
     )

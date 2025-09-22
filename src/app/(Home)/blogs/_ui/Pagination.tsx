@@ -8,6 +8,7 @@ import { redirect, usePathname, useSearchParams } from 'next/navigation';
 import React from 'react'
 
 const Pagination = ({ totalPages }: { totalPages: number }) => {
+    // console.log(totalPages);
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
