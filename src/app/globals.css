@@ -70,6 +70,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.tiptap.ProseMirror {
+  min-height: 10rem;
+}
+
 .tiptap h1,
 .tiptap h2,
 .tiptap h3,

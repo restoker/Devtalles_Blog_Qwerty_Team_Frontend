@@ -7,7 +7,6 @@ import { revalidatePath } from "next/cache";
 export const createLikeAction = actionClient
     .inputSchema(likeSchema)
     .action(async ({ parsedInput: { postId, tokenAuth } }) => {
-        // console.log(postId, tokenAuth);
         try {
 
             const serverUrl = process.env.ADDRESS_SERVER;
@@ -20,7 +19,6 @@ export const createLikeAction = actionClient
                 body: JSON.stringify({ post_id: postId }),
             });
             const data = await response.json();
-            // console.log(data);
             if (!response.ok) {
                 return {
                     ok: false,

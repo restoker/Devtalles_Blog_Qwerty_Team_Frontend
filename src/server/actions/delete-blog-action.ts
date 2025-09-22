@@ -34,7 +34,6 @@ export const deleteBlogAction = actionClient
                 msg: 'Blog deleted successfully'
             }
         } catch (e) {
-            console.log(e);
             return {
                 ok: false,
                 msg: 'Error on Server when deleting blog'

@@ -19,7 +19,6 @@ export const createCommentAction = actionClient
             });
 
             const data = await response.json();
-            // console.log(data);
             if (!data.ok) {
                 return {
                     ok: false,
@@ -27,7 +26,6 @@ export const createCommentAction = actionClient
                 }
             }
             revalidatePath(`/blogs`);
-            // revalidatePath(`/blogs/${postId}`);
             return {
                 ok: true,
                 msg: 'Comment created successfully'

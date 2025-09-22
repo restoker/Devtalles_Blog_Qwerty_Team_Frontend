@@ -9,7 +9,7 @@ import Pagination from './_ui/Pagination';
 export default async function Blogs({ searchParams }: { searchParams: { page: string } }) {
     const session = await auth();
     const pagina = (await searchParams).page;
-
+    // const skip = (pagina - 1) * 9;
     let page = pagina ? Number(pagina) : 1;
     if (isNaN(Number(pagina))) page = 1;
     const categoriesPromise = await fetch(`${process.env.ADDRESS_SERVER}/api/categories`, {
@@ -20,7 +20,7 @@ export default async function Blogs({ searchParams }: { searchParams: { page: st
         },
     });
 
-    const blogsPromise = await fetch(`${process.env.ADDRESS_SERVER}/api/posts?skip=${page - 1}&limit=9`, {
+    const blogsPromise = await fetch(`${process.env.ADDRESS_SERVER}/api/posts?skip=${(page - 1) * 9}&limit=9`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -34,7 +34,6 @@ export default async function Blogs({ searchParams }: { searchParams: { page: st
     ]);
 
     const blogs = await blogsData.json();
-    // console.log(blogs);
     const categories = await categoriesData.json();
     const postsServer = blogs.data.posts as Post[];
     const categoriesServer = categories.data.categories as CategoriesBlog[];
@@ -63,7 +62,7 @@ export default async function Blogs({ searchParams }: { searchParams: { page: st
                     {
                         postsServer.length > 0
                             ?
-                            <Pagination totalPages={Math.round(blogs.data.total / 9)} />
+                            <Pagination totalPages={Math.ceil(blogs.data.total / 9)} />
                             : null
                     }
                 </div>

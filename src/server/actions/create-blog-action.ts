@@ -8,10 +8,7 @@ import { revalidatePath } from "next/cache";
 export const createBlogAction = actionClient
     .inputSchema(newBlogSchema)
     .action(async ({ parsedInput: { title, resume, content, cover, tags, categories, tokenAuth, id }, ctx: { } }) => {
-        // console.log(tokenAuth);
-        // console.log(tags);
         try {
-            // return { ok: true, msg: 'Blog created' }
             const url = process.env.ADDRESS_SERVER;
             if (id) {
                 const dataToEdit = {
@@ -33,7 +30,6 @@ export const createBlogAction = actionClient
                 });
 
                 const data = await response.json();
-                // console.log(data);
 
                 if (!data.ok) {
                     return {
@@ -68,7 +64,6 @@ export const createBlogAction = actionClient
                 });
 
                 const data = await response.json();
-                // console.log(data);
 
                 if (!data.ok) {
                     return {
@@ -90,7 +85,6 @@ export const createBlogAction = actionClient
             }
 
         } catch (e) {
-            console.log(e);
             return {
                 ok: false,
                 msg: 'Error creating blog',

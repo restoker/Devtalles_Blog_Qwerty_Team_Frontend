@@ -13,7 +13,6 @@ export const getBlogAction = async (id: string) => {
         });
 
         const data = await response.json();
-        console.log(data);
 
         if (!response.ok) {
             return {

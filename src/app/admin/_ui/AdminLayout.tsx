@@ -13,10 +13,8 @@ import {
 import { usePathname } from 'next/navigation'
 
 const navigation = [
-    { name: 'Users', href: '/admin', icon: UsersIcon, current: false },
+    // { name: 'Users', href: '/admin', icon: UsersIcon, current: false },
     { name: 'Posts', href: '/admin/blogs', icon: DocumentDuplicateIcon, current: false },
-    // { name: 'Categories', href: '#', icon: FolderIcon, current: false },
-    // { name: 'Tags', href: '#', icon: CalendarIcon, current: false },
 ]
 
 function classNames(...classes: string[]) {
@@ -27,7 +25,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const pathname = usePathname();
 
-    console.log(pathname);
+    // console.log(pathname);
     return (
         <div className='mt-16'>
             <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
