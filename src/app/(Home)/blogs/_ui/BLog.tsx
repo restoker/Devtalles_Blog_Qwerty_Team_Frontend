@@ -9,7 +9,9 @@ const BLog = ({ post }: { post: Post }) => {
 
     return (
         <>
-            <article key={post.id} className="flex flex-col items-start justify-between bg-zinc-800 rounded-2xl group">
+            <article key={post.id} className="flex flex-col items-start justify-between bg-zinc-50/5 backdrop-blur-2xl rounded-2xl group hover:brightness-105 transition-all duration-500 border border-zinc-50/30">
+                <img src="/img/walking.gif" alt="" className="w-full h-full object-cover absolute blur-md z-0" />
+
                 <Link href={`/blogs/${post.id}`} className="relative w-full overflow-hidden rounded-t-2xl">
                     <img
                         alt=""
@@ -21,7 +23,7 @@ const BLog = ({ post }: { post: Post }) => {
                 <div className="w-full px-2 pb-2">
                     <div className="mt-8 flex items-center gap-x-4 text-xs">
                         {/* <time dateTime={converDate(post.created_at)} className="text-gray-400"> */}
-                        <span className="text-gray-400">
+                        <span className="text-gray-200 z-10">
                             {new Date(post.created_at).toLocaleDateString("en-US", {
                                 weekday: "short",
                                 year: "numeric",
@@ -37,7 +39,7 @@ const BLog = ({ post }: { post: Post }) => {
                             {post.category.name}
                         </Link>
                     </div>
-                    <div className="group relative flex justify-center w-full flex-col items-center">
+                    <div className="group relative flex justify-center w-full flex-col">
                         <Link href={`/blogs/${post.id}`}>
                             <h3 className="mt-3 text-lg/6 font-semibold text-white group-hover:text-gray-100 line-clamp-1">
                                 <span className="absolute inset-0" />
