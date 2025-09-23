@@ -8,7 +8,6 @@ import { redirect, usePathname, useSearchParams } from 'next/navigation';
 import React from 'react'
 
 const Pagination = ({ totalPages }: { totalPages: number }) => {
-    // console.log(totalPages);
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
@@ -19,7 +18,6 @@ const Pagination = ({ totalPages }: { totalPages: number }) => {
     if (currentPage < 1 || isNaN(+pageString)) {
         redirect(pathname);
     }
-
     const allPages = generatePagination(currentPage, totalPages);
 
     const createUrl = (pageNumber: number | string) => {
@@ -63,7 +61,7 @@ const Pagination = ({ totalPages }: { totalPages: number }) => {
                 ))}
 
             </div>
-            {totalPages < 2 ? <div className='-mt-px flex w-0 flex-1 justify-end' /> : <div className="-mt-px flex w-0 flex-1 justify-end">
+            {totalPages < 2 || currentPage === totalPages ? <div className='-mt-px flex w-0 flex-1 justify-end' /> : <div className="-mt-px flex w-0 flex-1 justify-end">
                 <Link
                     href={createUrl(currentPage + 1)}
                     className="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-100 dark:hover:text-gray-200"
