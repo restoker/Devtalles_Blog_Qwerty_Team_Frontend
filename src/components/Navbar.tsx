@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import PopperMenuUser from './PopperMenuUser';
+import clsx from 'clsx';
 
 const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -33,7 +34,11 @@ const Navbar = () => {
                         </div>
                         <div className="hidden lg:flex lg:gap-x-12 ml-16 lg:items-center">
                             {navigation.map((item) => (
-                                <Link key={item.name} href={item.href} className="text-sm/6 font-semibold text-gray-400 hover:text-white">
+                                <Link
+                                    key={item.name}
+                                    href={item.href}
+                                    className={clsx('text-base font-semibold text-gray-400 hover:text-white', path === item.href ? 'text-purple-400 underline' : '')}
+                                >
                                     {item.name}
                                 </Link>
                             ))}
@@ -57,7 +62,7 @@ const Navbar = () => {
                                     ?
                                     <PopperMenuUser session={sesion} />
                                     :
-                                    <Link href="/login" className="text-sm/6 font-semibold text-white">
+                                    <Link href="/login" className="text-base font-semibold text-white">
                                         Log in <span aria-hidden="true">&rarr;</span>
                                     </Link>
                             }
@@ -89,7 +94,7 @@ const Navbar = () => {
                                         <a
                                             key={item.name}
                                             href={item.href}
-                                            className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-400 hover:text-white hover:bg-white/5"
+                                            className={clsx('-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-400 hover:text-white hover:bg-white/5', path === item.href ? 'text-purple-400 ' : '')}
                                         >
                                             {item.name}
                                         </a>

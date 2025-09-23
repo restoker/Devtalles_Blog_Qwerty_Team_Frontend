@@ -37,7 +37,6 @@ export function LoginForm({ onToggle }: LoginFormProps) {
           },
           closeButton: true,
           position: 'top-right',
-          // duration: Infinity,
           icon: <CheckCircleIcon className='animate-bounce' />,
           duration: 2000,
         });
@@ -52,7 +51,6 @@ export function LoginForm({ onToggle }: LoginFormProps) {
           },
           closeButton: true,
           position: 'top-right',
-          // duration: Infinity,
           icon: <FaceFrownIcon className='animate-bounce' />,
           duration: 2000,
         });
@@ -64,7 +62,6 @@ export function LoginForm({ onToggle }: LoginFormProps) {
   })
 
   function onSubmit(values: z.infer<typeof loginSchema>) {
-    // console.log(values);
     execute(values);
   }
 
@@ -168,7 +165,6 @@ export function LoginForm({ onToggle }: LoginFormProps) {
       <div className="hidden md:flex flex-col justify-between p-10 text-white bg-cover bg-center relative" style={{ backgroundImage: "url('/fotosingup.jpg')" }}>
         <div className="absolute inset-0 bg-black/30"></div>
         <div className="z-10">
-          {/* <Icons.awLogo className="h-8 w-auto" /> */}
           <p className="text-2xl font-bold">{"{Dev/Blog}"}</p>
         </div>
         <div className="z-10 mt-auto">

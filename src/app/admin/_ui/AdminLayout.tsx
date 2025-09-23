@@ -4,10 +4,7 @@ import { useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from '@headlessui/react'
 import {
     ArrowsRightLeftIcon,
-    // CalendarIcon,
     DocumentDuplicateIcon,
-    // FolderIcon,
-    UsersIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { usePathname } from 'next/navigation'
@@ -25,7 +22,6 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const pathname = usePathname();
 
-    // console.log(pathname);
     return (
         <div className='mt-16'>
             <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">

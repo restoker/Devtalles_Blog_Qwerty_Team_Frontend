@@ -14,7 +14,7 @@ const BLog = ({ post }: { post: Post }) => {
                     <img
                         alt=""
                         src={post.images[0] || '/img/img8.webp'}
-                        className="aspect-video w-full rounded-t-2xl bg-gray-100 object-cover sm:aspect-2/1 lg:aspect-3/2 group-hover:scale-105 transition-all duration-500 hover:blur-sm"
+                        className="aspect-video w-full rounded-t-2xl bg-gray-100 object-cover sm:aspect-2/1 lg:aspect-3/2 group-hover:scale-110 transition-all duration-500 hover:blur-sm"
                     />
                     <div className="absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset" />
                 </Link>
@@ -44,7 +44,7 @@ const BLog = ({ post }: { post: Post }) => {
                                 {post.title}
                             </h3>
                         </Link>
-                        <p className="mt-5 line-clamp-2 text-sm/6 text-gray-400">{post.description}</p>
+                        <p className="mt-5 line-clamp-1 text-sm/6 text-gray-400">{post.description}</p>
                     </div>
                     <div className="relative mt-8 flex items-center gap-x-4">
                         <img alt="" src={post.author.image || '/img/img8.webp'} className="size-10 rounded-full bg-gray-100" />
