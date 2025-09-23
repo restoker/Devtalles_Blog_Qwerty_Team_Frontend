@@ -46,7 +46,6 @@ const Hero = () => {
                         y: `${-110 + 110 * progress}%`,
                         scale: 0.25 + 0.75 * progress,
                         rotation: -15 + 15 * progress,
-                        // translateX: progress,
                     });
                 },
             });
