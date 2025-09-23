@@ -28,7 +28,7 @@ const Search: FC<Props> = ({ setSearch, seeSearch, postsServer }) => {
 
     return (
         <Dialog
-            className="relative z-10"
+            className="relative z-50"
             open={seeSearch}
             onClose={() => {
                 setSearch(false)
