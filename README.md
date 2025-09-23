@@ -1,3 +1,7 @@
+# ❤️ Devtalles-Blog ❤️
+<img width="1896" height="967" alt="image" src="https://github.com/user-attachments/assets/ace3e3b9-98ab-4850-8a59-450e1854c091" />
+
+
 # 🚀 Funcionamiento general del blog
 
 El blog DevTallesBlog está diseñado para ser una plataforma completa de publicación, consulta y administración de contenido sobre desarrollo de software y tecnología. A continuación se describe el flujo principal para el usuario:
@@ -86,6 +90,29 @@ Este proyecto es un blog moderno construido con Next.js, TypeScript y Tailwind C
 
 ---
 
+# �️ Estructura del proyecto
+
+La estructura de carpetas y archivos está organizada para facilitar el desarrollo y la escalabilidad:
+
+```text
+📦 Devtalles_Blog_Qwerty_Team_Frontend
+ ┣ 📁 public/           # Imágenes y archivos estáticos
+ ┣ 📁 src/
+ ┃ ┣ 📁 app/           # Páginas principales (Home, Blogs, Auth, Admin, etc.)
+ ┃ ┣ 📁 components/    # Componentes reutilizables (Navbar, UI, etc.)
+ ┃ ┣ 📁 interfaces/    # Modelos y tipos de datos
+ ┃ ┣ 📁 lib/           # Utilidades y lógica compartida
+ ┃ ┣ 📁 server/        # Lógica del servidor y acciones
+ ┃ ┣ 📁 store/         # Manejo de estado global
+ ┃ ┣ 📁 types/         # Tipos y validaciones
+ ┃ ┣ 📁 utils/         # Funciones utilitarias
+ ┣ .env.local          # Variables de entorno
+ ┣ package.json        # Dependencias y scripts
+ ┣ tailwind.config.ts  # Configuración de Tailwind CSS
+ ┣ tsconfig.json       # Configuración de TypeScript
+ ┣ README.md           # Documentación principal
+```
+
 ## 📦 Dependencias principales instaladas
 
 Este proyecto utiliza las siguientes librerías y herramientas:
@@ -116,9 +143,6 @@ Este proyecto utiliza las siguientes librerías y herramientas:
 - **Tailwind Merge** y **Tailwindcss Animate**: 🎨 Utilidades para Tailwind.
 
 Para ver todas las dependencias, revisa el archivo `package.json`.
-
-
----
 
 
 ---
