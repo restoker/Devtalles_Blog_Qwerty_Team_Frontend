@@ -155,12 +155,20 @@ Para ver todas las dependencias, revisa el archivo `package.json`.
 - pastflex_39864
 - silence_0908
 
-# 📝 Frontend de DevTallesBlog  
+
+## 🚀 Clonación del repositorio
+
+Para comenzar, clona el repositorio con el siguiente comando:
+
+```bash
+git clone https://github.com/restoker/Devtalles_Blog_Qwerty_Team_Frontend.git
+cd Devtalles_Blog_Qwerty_Team_Frontend
+```
+
+```
 ## 🏁 Getting Started
 
 First, run the development server:
-
-```bash
 # 📦 Instalar dependencias
 npm install
 # ▶️ Luego
