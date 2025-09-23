@@ -11,6 +11,7 @@ import { registerUserAction } from '@/server/actions/register-user-action';
 import clsx from 'clsx';
 import { toast } from 'sonner';
 import { CheckCircleIcon, FaceFrownIcon } from '@heroicons/react/24/outline';
+import SocialForm from './Social-form';
 
 interface RegisterFormProps {
   onToggle: () => void;
@@ -214,17 +215,7 @@ export function RegisterForm({ onToggle }: RegisterFormProps) {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
-            <StarBorder>
-              <Icons.google className="h-5 w-5 mx-auto" />
-            </StarBorder>
-            <StarBorder>
-              <Icons.discord className="h-5 w-5 mx-auto" />
-            </StarBorder>
-            <StarBorder>
-              <Icons.linkedin className="h-5 w-5 mx-auto" />
-            </StarBorder>
-          </div>
+          <SocialForm />
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
             ¿Ya tienes una cuenta?{' '}

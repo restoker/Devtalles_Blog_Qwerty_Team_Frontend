@@ -12,15 +12,10 @@ import Link from 'next/link';
 
 const solutions = [
     { name: 'new Blog', description: 'Get a better understanding of your traffic', href: '/blogs/new', icon: CursorArrowRaysIcon },
-    // { name: 'Profile', description: 'Speak directly to your customers', href: '#', icon: FingerPrintIcon },
     { name: 'All Blogs', description: "Your customers' data will be safe and secure", href: '/blogs', icon: PlayCircleIcon },
-    // { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
-    // { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
 ]
 
 const PopperMenuUser = ({ session }: { session: Session }) => {
-    const user = session?.user;
-    // console.log(user);
     return (
         <>
             <Popover className="relative">
@@ -31,9 +26,6 @@ const PopperMenuUser = ({ session }: { session: Session }) => {
                         )}
                         {!session?.user.image && (
                             <AvatarFallback className="bg-transparent">
-                                {/* <div className="font-bold">
-                                                    {user?.user.name?.charAt(0).toUpperCase()}
-                                                </div> */}
                                 <img src="/img/avatar.webp" />
                             </AvatarFallback>
                         )}
